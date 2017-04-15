@@ -21,6 +21,10 @@ namespace Bio
             first.print();
 
 
+            DNA_chain test1 = new DNA_chain();
+            test1.load_samples("9.200-40.txt");
+
+            Console.ReadLine();
 
         }
     }

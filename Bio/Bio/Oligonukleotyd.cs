@@ -14,33 +14,107 @@ namespace Bio
         private int next_oligonukleotid;                        //ID następnego oligonukleotydu
         private int prev_oligonukleotid;                        //ID poprzedniego oligonukleotydu
 
+        public int Prev_oligonukleotid
+        {
+            get
+            {
+                return prev_oligonukleotid;
+            }
+
+            set
+            {
+                prev_oligonukleotid = value;
+            }
+        }
+
+        public int Next_oligonukleotid
+        {
+            get
+            {
+                return next_oligonukleotid;
+            }
+
+            set
+            {
+                next_oligonukleotid = value;
+            }
+        }
+
+        public int SetID
+        {
+            get
+            {
+                return ID;
+            }
+
+            set
+            {
+                ID = value;
+            }
+        }
+
+        public string Ciag
+        {
+            get
+            {
+                return ciag;
+            }
+
+            set
+            {
+                ciag = value;
+            }
+        }
+
+        public int Nmb_of_next_matching_negative
+        {
+            get
+            {
+                return nmb_of_next_matching_negative;
+            }
+
+            set
+            {
+                nmb_of_next_matching_negative = value;
+            }
+        }
+
+        public int Nmb_of_prev_matching_negative
+        {
+            get
+            {
+                return nmb_of_prev_matching_negative;
+            }
+
+            set
+            {
+                nmb_of_prev_matching_negative = value;
+            }
+        }
+
+        public int Nmb_of_next_matching_positive
+        {
+            get
+            {
+                return nmb_of_next_matching_positive;
+            }
+
+            set
+            {
+                nmb_of_next_matching_positive = value;
+            }
+        }
 
         public Oligonukleotyd()
         {
             ciag = null;
         }
 
-        public void SetID(int ID)
-        {
-            this.ID = ID;
-        }
 
 
         public Oligonukleotyd(string ciag)
         {
             this.ciag = ciag;
-        }
-
-        public void SetCiag(string ciag)
-        {
-            if(ciag.Length == 10)
-            {
-                this.ciag = ciag;
-            }
-            else
-            {
-                this.ciag = null;
-            }
         }
 
 

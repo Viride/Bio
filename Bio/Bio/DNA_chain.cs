@@ -11,6 +11,8 @@ namespace Bio
         private int n;                                      //obecna długość łańcucha
         private List<Oligonukleotyd> sample_oligs;          //lista wszystkich oligonukleotydów
         private List<Oligonukleotyd> string_of_olig;        //obecny łańcuch oligonukleotydów
+        private float score;
+
 
         public int N_maks
         {
@@ -52,8 +54,13 @@ namespace Bio
             {
                 Console.WriteLine("Ciag: {0}, negative: {1}, positi: {2}", string_of_olig[i].Ciag, string_of_olig[i].Nmb_of_next_matching_negative, string_of_olig[i].Nmb_of_next_matching_positive);
             }
+            Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}", score, n, string_of_olig.Count());
         }
 
+        public void Score()
+        {
+            score = (float)n / string_of_olig.Count();
+        }
         
         public void generate_random()
         {
@@ -106,7 +113,7 @@ namespace Bio
                 j = 0;
                 for (i = 1; i < 10; i++)                                //zliczanie trafień, przy możliwości pozytywnych błędów
                 {
-                    Console.WriteLine("{0}  {1}", temp_olig.Ciag[i], temp2_olig.Ciag[j]);
+//Do usunięcia      //Console.WriteLine("{0}  {1}", temp_olig.Ciag[i], temp2_olig.Ciag[j]);
                     if (temp_olig.Ciag[i] == temp2_olig.Ciag[j])
                     {
                         counter_pos++;

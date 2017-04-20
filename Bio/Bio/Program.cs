@@ -25,6 +25,7 @@ namespace Bio
             test1.load_samples("9.200-40.txt");
             test1.N_maks = 209;
             test1.generate_random();
+            test1.Score();
             test1.print_chain();
 
             Console.ReadLine();

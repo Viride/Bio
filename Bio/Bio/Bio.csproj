@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DNA_chain.cs" />
     <Compile Include="Oligonukleotyd.cs" />
+    <Compile Include="Population.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

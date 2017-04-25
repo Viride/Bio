@@ -22,35 +22,26 @@ namespace Bio
             StringOfOlig = new List<Oligonukleotyd>();
         }
 
-        public List<Oligonukleotyd> copy_sample_base(List<Oligonukleotyd> sample_base)
-        {
-            return sample_base;
-        }
-
-        public void set_sample_base()
-        {
-
-        }
 
         //Wyświetla stworzony łańcuch DNA
-        public void print_chain() 
+        public void PrintChain() 
         {
             for (int i=0; i < StringOfOlig.Count(); i++)  //należy uwzględnić nakładanie się elementów
             {
                 Console.WriteLine("Ciag: {0}, positi: {2}, negative: {1}", 
                     StringOfOlig[i].Ciag, 
-                    StringOfOlig[i].Nmb_of_next_matching_negative, 
-                    StringOfOlig[i].Nmb_of_next_matching_positive);
+                    StringOfOlig[i].NmbOfNextMatchingNegative, 
+                    StringOfOlig[i].NmbOfNextMatchingPositive);
             }
             Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}", Score, SequenceLength, StringOfOlig.Count());
         }
 
-        public void print_chain_summary()
+        public void PrintChainSummary()
         {
             Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}", Score, SequenceLength, StringOfOlig.Count());
         }
         
-        public void generate_random()
+        public void GenerateRandom()
         {
             Random rnd = new Random();
             int choosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());  //losujemy który wybrać z przedziału 0 do maks - tyle ile jest w stworzonym łańcuchu
@@ -96,7 +87,7 @@ namespace Bio
                         counter_neg = 0;
                     }
                 }
-                temp_olig.Nmb_of_next_matching_negative = counter_neg;
+                temp_olig.NmbOfNextMatchingNegative = counter_neg;
                 counter_pos = 0;
                 j = 0;
                 for (i = 1; i < 10; i++)                                //zliczanie trafień, przy możliwości pozytywnych błędów
@@ -108,17 +99,17 @@ namespace Bio
                     }
                     j++;
                 }
-                temp_olig.Nmb_of_next_matching_positive = counter_pos;
+                temp_olig.NmbOfNextMatchingPositive = counter_pos;
 
-                if (temp_olig.Nmb_of_next_matching_positive == 8)
+                if (temp_olig.NmbOfNextMatchingPositive == 8)
                 {
                     if (SequenceLength + 1 <= SequenceMax)
                     {
                         SequenceLength = SequenceLength + 1;
-                        StringOfOlig.Last().Next_oligonukleotid = temp2_olig.SetID;
-                        StringOfOlig.Last().Nmb_of_next_matching_negative = counter_neg;
-                        StringOfOlig.Last().Nmb_of_next_matching_positive = counter_pos;
-                        temp2_olig.Prev_oligonukleotid = StringOfOlig.Last().SetID;
+                        StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
+                        StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                        StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
+                        temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
                         StringOfOlig.Add(temp2_olig);
                         SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
                         SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
@@ -130,13 +121,13 @@ namespace Bio
                 }
                 else
                 {
-                    if (SequenceLength + 10-temp_olig.Nmb_of_next_matching_negative <= SequenceMax)
+                    if (SequenceLength + 10-temp_olig.NmbOfNextMatchingNegative <= SequenceMax)
                     {
-                        SequenceLength = SequenceLength + 10-temp_olig.Nmb_of_next_matching_negative;
-                        StringOfOlig.Last().Next_oligonukleotid = temp2_olig.SetID;
-                        StringOfOlig.Last().Nmb_of_next_matching_negative = counter_neg;
-                        StringOfOlig.Last().Nmb_of_next_matching_positive = counter_pos;
-                        temp2_olig.Prev_oligonukleotid = StringOfOlig.Last().SetID;
+                        SequenceLength = SequenceLength + 10-temp_olig.NmbOfNextMatchingNegative;
+                        StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
+                        StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                        StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
+                        temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
                         StringOfOlig.Add(temp2_olig);
                         SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
                         SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
@@ -151,7 +142,7 @@ namespace Bio
 
         }
 
-        public void load_samples(string file_name)
+        public void LoadSamples(string file_name)
         {
             int counter = 0;
             string line;
@@ -162,7 +153,7 @@ namespace Bio
             {
                 //Console.WriteLine(line);
                 Oligonukleotyd olig = new Oligonukleotyd(line);
-                olig.SetID=counter;
+                olig.ID=counter;
                 SampleOligs.Add(olig);
                 //sample_oligs[counter].print();
                 counter++;
@@ -170,7 +161,26 @@ namespace Bio
 
             file.Close();
         }
+        public void LoadSamples(string file_name, int SequenceMax)
+        {
+            int counter = 0;
+            string line;
 
+            // Read the file and display it line by line.
+            System.IO.StreamReader file = new System.IO.StreamReader(file_name);
+            while ((line = file.ReadLine()) != null)
+            {
+                //Console.WriteLine(line);
+                Oligonukleotyd olig = new Oligonukleotyd(line);
+                olig.ID = counter;
+                SampleOligs.Add(olig);
+                //sample_oligs[counter].print();
+                counter++;
+            }
+            this.SequenceMax = SequenceMax;
+
+            file.Close();
+        }
 
     }
 }

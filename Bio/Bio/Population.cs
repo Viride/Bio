@@ -17,16 +17,29 @@ namespace Bio
             population = new List<DnaChain>();
         }
 
-        public void generate_population(int rozmiar)
+        public void GeneratePopulation(int rozmiar)
         {
+            DnaChain sample_base = new DnaChain();
+            sample_base = new DnaChain();
+            sample_base.LoadSamples("9.200-40.txt", 209);
+
             for (int i = 0; i < rozmiar; i++)
             {
-                DnaChain sample_base = new DnaChain();
                 DnaChain temp = new DnaChain();
 
-                sample_base = new DnaChain();
-                sample_base.load_samples("9.200 - 40.txt");
+                temp.SampleOligs = sample_base.SampleOligs;
+                temp.SequenceMax = sample_base.SequenceMax;
+                temp.GenerateRandom();
+                population.Add(temp);
 
+            }
+        }
+
+        public void PrintResult()
+        {
+            for (int i = 0; i < population.Count(); i++)
+            {
+                population[i].PrintChainSummary();
             }
         }
 

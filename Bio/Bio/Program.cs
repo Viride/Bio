@@ -16,11 +16,15 @@ namespace Bio
         static void Main(string[] args)
         {
 
-            DnaChain test1 = new DnaChain();
-            test1.load_samples("9.200-40.txt");
-            test1.SequenceMax = 209;
-            test1.generate_random();
-            test1.print_chain_summary();
+            //DnaChain test1 = new DnaChain();
+            //test1.LoadSamples("9.200-40.txt");
+            //test1.SequenceMax = 209;
+            //test1.GenerateRandom();
+            //test1.PrintChainSummary();
+
+            Population population = new Population();
+            population.GeneratePopulation(40);
+            population.PrintResult();
 
             Console.ReadLine();
 

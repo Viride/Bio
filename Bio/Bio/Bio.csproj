@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DNA_chain.cs" />
+    <Compile Include="DnaChain.cs" />
     <Compile Include="Oligonukleotyd.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Program.cs" />

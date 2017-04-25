@@ -10,12 +10,26 @@ namespace Bio
     {
         //  Wydaje mi się, że najłatwiej będzie pracować na listach, bo można swobodnie do nich dodawać i odejmować, a do elementów
         //  można się odwoływać jak w tablicy
-        private List<DNA_chain> population; 
+        private List<DnaChain> population; 
 
         public Population()
         {
-            population = new List<DNA_chain>();
+            population = new List<DnaChain>();
         }
+
+        public void generate_population(int rozmiar)
+        {
+            for (int i = 0; i < rozmiar; i++)
+            {
+                DnaChain sample_base = new DnaChain();
+                DnaChain temp = new DnaChain();
+
+                sample_base = new DnaChain();
+                sample_base.load_samples("9.200 - 40.txt");
+
+            }
+        }
+
 
 
         //  Nowo powstałe rozwiązania (mutacja, krzyżowanie) dodajemy do populacji a na koniec 
@@ -24,6 +38,12 @@ namespace Bio
 
         //Mutacja
         public void Mutation()
+        {
+
+        }
+
+        //Mutacja
+        public void Mutation2()
         {
 
         }

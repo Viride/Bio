@@ -15,18 +15,12 @@ namespace Bio
 
         static void Main(string[] args)
         {
-            Oligonukleotyd first = new Oligonukleotyd();
 
-            first.Ciag="ABABABABA";
-            first.print();
-
-
-            DNA_chain test1 = new DNA_chain();
+            DnaChain test1 = new DnaChain();
             test1.load_samples("9.200-40.txt");
-            test1.N_maks = 209;
+            test1.SequenceMax = 209;
             test1.generate_random();
-            test1.Score();
-            test1.print_chain();
+            test1.print_chain_summary();
 
             Console.ReadLine();
 

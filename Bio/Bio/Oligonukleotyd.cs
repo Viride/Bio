@@ -110,13 +110,10 @@ namespace Bio
             ciag = null;
         }
 
-
-
         public Oligonukleotyd(string ciag)
         {
             this.ciag = ciag;
         }
-
 
         public void print()
         {

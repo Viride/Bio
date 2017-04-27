@@ -49,15 +49,30 @@ namespace Bio
         //  selekcja je oczyści i zostawi tylko porządaną liczbę
 
 
-        //Mutacja
+        //Mutacja - skrócenie końcówki mutacji
         public void Mutation()
         {
-
+            // WHILE (count() of mutations == x)
+            
+            //wybieramy rozwiązanie do mutacji
+            //losujemy dwa miejsca w ciągu
+            //resetujemy next i prev dla sąsiadów wybranych elementów
+            //zamieniamy elementy miejscami w liście
+            //generujemy nowe next i prev dla sąsiadów
+            //sprawdzamy, czy mieści się w SequenceMax, jeśli nie losujemy inne elementy do mutacji, maks 3 próby
         }
 
         //Mutacja
         public void Mutation2()
         {
+
+
+        }
+
+        //Mutacja
+        public void Mutation3()
+        {
+            //wymiana używanego z nieużywanym
 
         }
 
@@ -67,8 +82,18 @@ namespace Bio
 
         }
         //Selekcja
+        //dojdzie część rozwiązań z poprzedniego
         public void Selection()
         {
+
+            List<DnaChain> temp = new List<DnaChain>();
+            int choosenOne=0;
+            int scoreOfChoosenOne = 0;
+
+            for (int i = 0; i < population.Count(); i=i+4)
+            {
+                                
+            }
 
         }
     }

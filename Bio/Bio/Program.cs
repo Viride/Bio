@@ -23,7 +23,7 @@ namespace Bio
             //test1.PrintChainSummary();
 
             Population population = new Population();
-            population.GeneratePopulation(40);
+            population.GeneratePopulation(5);
             population.PrintResult();
 
             Console.ReadLine();

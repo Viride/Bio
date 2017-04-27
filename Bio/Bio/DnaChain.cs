@@ -22,6 +22,86 @@ namespace Bio
             StringOfOlig = new List<Oligonukleotyd>();
         }
 
+        public bool connect(Oligonukleotyd temp_olig, Oligonukleotyd temp2_olig, bool finished)
+        {
+
+            int j = 0;                  //porusza się po prawej części połączenia
+            int counter_neg = 0;
+            int counter_pos = 0;
+
+            ///inny pomysł, to aby użyć contain i sprawdzić, czy lewa strona zawiera np. 3 pierwsze litery prawej
+            for (int i = 1; i < 10; i++)                                //zliczanie trafień przy możliwości negatywnych błędów
+            {
+                if (temp_olig.Ciag[i] == temp2_olig.Ciag[j])
+                {
+                    counter_neg++;
+                    j++;
+                }
+                else if (temp_olig.Ciag[i] == temp2_olig.Ciag[0])
+                {
+                    j = 1;
+                    counter_neg = 1;
+                }
+                else
+                {
+                    j = 0;
+                    counter_neg = 0;
+                }
+            }
+            temp_olig.NmbOfNextMatchingNegative = counter_neg;
+            counter_pos = 0;
+            j = 0;
+            for (int i = 1; i < 10; i++)                                //zliczanie trafień, przy możliwości pozytywnych błędów
+            {
+                //Do usunięcia      //Console.WriteLine("{0}  {1}", temp_olig.Ciag[i], temp2_olig.Ciag[j]);
+                if (temp_olig.Ciag[i] == temp2_olig.Ciag[j])
+                {
+                    counter_pos++;
+                }
+                j++;
+            }
+            temp_olig.NmbOfNextMatchingPositive = counter_pos;
+
+            if (temp_olig.NmbOfNextMatchingPositive == 8)
+            {
+                if (SequenceLength + 1 <= SequenceMax)
+                {
+                    SequenceLength = SequenceLength + 1;
+                    StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
+                    StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                    StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
+                    temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
+                    StringOfOlig.Add(temp2_olig);
+                    SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
+                    SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
+                }
+                else
+                {
+                    finished = true;
+                }
+            }
+            else
+            {
+                if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax)
+                {
+                    SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative;
+                    StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
+                    StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                    StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
+                    temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
+                    StringOfOlig.Add(temp2_olig);
+                    SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
+                    SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
+                }
+                else
+                {
+                    finished = true;
+                }
+
+            }
+
+            return finished;
+        }
 
         //Wyświetla stworzony łańcuch DNA
         public void PrintChain() 
@@ -52,92 +132,17 @@ namespace Bio
             SampleOligs.Remove(temp_olig);                                         //usuwamy go tam gdzie jest
             SampleOligs.Add(temp_olig);                                            //i wstawiamy na koniec
 
-            int i = 1;      //porusza się po lewej części połączenia
-            int j = 0;      //porusza się po prawej części połączenia
             bool finished = false;
-            int counter_neg=0;
-            int counter_pos = 0;
 
             while (!finished == true)
             {
-                j = 0;
-                counter_neg = 0;
-                counter_pos = 0;
+                
 
                 choosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());
                 temp_olig = StringOfOlig.Last();
                 temp2_olig = SampleOligs[choosen];
 
-                ///inny pomysł, to aby użyć contain i sprawdzić, czy lewa strona zawiera np. 3 pierwsze litery prawej
-                for (i = 1; i < 10; i++)                                //zliczanie trafień przy możliwości negatywnych błędów
-                {
-                    if (temp_olig.Ciag[i] == temp2_olig.Ciag[j])
-                    {
-                        counter_neg++;
-                        j++;
-                    }
-                    else if (temp_olig.Ciag[i] == temp2_olig.Ciag[0])
-                    {
-                        j = 1;
-                        counter_neg = 1;
-                    }
-                    else
-                    {
-                        j = 0;
-                        counter_neg = 0;
-                    }
-                }
-                temp_olig.NmbOfNextMatchingNegative = counter_neg;
-                counter_pos = 0;
-                j = 0;
-                for (i = 1; i < 10; i++)                                //zliczanie trafień, przy możliwości pozytywnych błędów
-                {
-//Do usunięcia      //Console.WriteLine("{0}  {1}", temp_olig.Ciag[i], temp2_olig.Ciag[j]);
-                    if (temp_olig.Ciag[i] == temp2_olig.Ciag[j])
-                    {
-                        counter_pos++;
-                    }
-                    j++;
-                }
-                temp_olig.NmbOfNextMatchingPositive = counter_pos;
-
-                if (temp_olig.NmbOfNextMatchingPositive == 8)
-                {
-                    if (SequenceLength + 1 <= SequenceMax)
-                    {
-                        SequenceLength = SequenceLength + 1;
-                        StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
-                        StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
-                        StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
-                        temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
-                        StringOfOlig.Add(temp2_olig);
-                        SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
-                        SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
-                    }
-                    else
-                    {
-                        finished = true;
-                    }
-                }
-                else
-                {
-                    if (SequenceLength + 10-temp_olig.NmbOfNextMatchingNegative <= SequenceMax)
-                    {
-                        SequenceLength = SequenceLength + 10-temp_olig.NmbOfNextMatchingNegative;
-                        StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
-                        StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
-                        StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
-                        temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
-                        StringOfOlig.Add(temp2_olig);
-                        SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
-                        SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
-                    }
-                    else
-                    {
-                        finished = true;
-                    }
-
-                }
+                finished=connect(temp_olig, temp2_olig, finished);
             }
 
         }

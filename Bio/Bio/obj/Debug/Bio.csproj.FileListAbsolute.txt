@@ -10,3 +10,12 @@ C:\Users\ZieIony\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.pdb
 C:\Users\ZieIony\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.exe
 C:\Users\ZieIony\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.pdb
 C:\Users\ZieIony\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.csprojResolveAssemblyReference.cache
+C:\Users\student\Desktop\Bio\Bio\Bio\bin\Debug\Bio.exe.config
+C:\Users\student\Desktop\Bio\Bio\Bio\obj\Debug\Bio.exe
+C:\Users\student\Desktop\Bio\Bio\Bio\obj\Debug\Bio.pdb
+C:\Users\student\Desktop\Bio\Bio\Bio\bin\Debug\Bio.exe
+C:\Users\student\Desktop\Bio\Bio\Bio\bin\Debug\Bio.pdb
+C:\Users\student\Desktop\Bio\Bio\Bio\obj\Debug\Bio.csprojResolveAssemblyReference.cache
+H:\Bio\Bio\Bio\bin\Debug\Bio.exe.config
+H:\Bio\Bio\Bio\obj\Debug\Bio.exe
+H:\Bio\Bio\Bio\obj\Debug\Bio.pdb

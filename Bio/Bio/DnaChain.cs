@@ -49,7 +49,9 @@ namespace Bio
                 }
             }
             temp_olig.NmbOfNextMatchingNegative = counter_neg;
-            counter_pos = 0;
+
+
+            /*counter_pos = 0;
             j = 0;
             for (int i = 1; i < 10; i++)                                //zliczanie trafień, przy możliwości pozytywnych błędów
             {
@@ -82,12 +84,13 @@ namespace Bio
             }
             else
             {
+            */
                 if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax)
                 {
                     SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative;
                     StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
                     StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
-                    StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
+              //      StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
                     temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
                     StringOfOlig.Add(temp2_olig);
                     SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
@@ -98,7 +101,7 @@ namespace Bio
                     finished = true;
                 }
 
-            }
+         //   }
 
             return finished;
         }
@@ -108,10 +111,9 @@ namespace Bio
         {
             for (int i=0; i < StringOfOlig.Count(); i++)  //należy uwzględnić nakładanie się elementów
             {
-                Console.WriteLine("Ciag: {0}, positi: {2}, negative: {1}", 
+                Console.WriteLine("Ciag: {0}, negative: {1}", 
                     StringOfOlig[i].Ciag, 
-                    StringOfOlig[i].NmbOfNextMatchingNegative, 
-                    StringOfOlig[i].NmbOfNextMatchingPositive);
+                    StringOfOlig[i].NmbOfNextMatchingNegative);
             }
             Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}", Score, SequenceLength, StringOfOlig.Count());
         }

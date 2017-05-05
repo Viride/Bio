@@ -39,7 +39,8 @@ namespace Bio
         {
             for (int i = 0; i < population.Count(); i++)
             {
-                population[i].PrintChainSummary();
+               // population[i].PrintChainSummary();
+                population[i].PrintChain();
             }
         }
 

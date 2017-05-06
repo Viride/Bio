@@ -111,9 +111,11 @@ namespace Bio
         {
             for (int i=0; i < StringOfOlig.Count(); i++)  //należy uwzględnić nakładanie się elementów
             {
-                Console.WriteLine("Ciag: {0}, negative: {1}", 
-                    StringOfOlig[i].Ciag, 
-                    StringOfOlig[i].NmbOfNextMatchingNegative);
+                Console.WriteLine("Ciag: {0}, negative: {1}, moje ID: {2}, ID next {3}",
+                    StringOfOlig[i].Ciag,
+                    StringOfOlig[i].NmbOfNextMatchingNegative,
+                    StringOfOlig[i].ID,
+                    StringOfOlig[i].NextOligonukleotid);
             }
             Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}", Score, SequenceLength, StringOfOlig.Count());
         }
@@ -133,7 +135,7 @@ namespace Bio
             temp_olig = SampleOligs[chosen];
             SampleOligs.Remove(temp_olig);                                         //usuwamy go tam gdzie jest
             SampleOligs.Add(temp_olig);                                            //i wstawiamy na koniec
-
+            //temp_olig.print();
             bool finished = false;
 
             while (!finished == true)
@@ -289,35 +291,35 @@ namespace Bio
             
                if(oligNr1 > 0)
                {
-                   StringOfOlig[oligNr2].PrevOligonukleotid = pom1.PrevOligonukleotid;
-               }
-               else
-               {
-                   StringOfOlig[oligNr2].PrevOligonukleotid = -1;
-               }
-               if (oligNr2 > 0)
-               {
-                   StringOfOlig[oligNr1].PrevOligonukleotid = pom2.PrevOligonukleotid;
+                   StringOfOlig[oligNr1].PrevOligonukleotid = pom1.PrevOligonukleotid;
                }
                else
                {
                    StringOfOlig[oligNr1].PrevOligonukleotid = -1;
                }
-               if (oligNr1 < StringOfOlig.Count() - 1)
+               if (oligNr2 > 0)
                {
-                   StringOfOlig[oligNr2].NextOligonukleotid = pom1.NextOligonukleotid;
+                   StringOfOlig[oligNr2].PrevOligonukleotid = pom2.PrevOligonukleotid;
                }
                else
                {
-                   StringOfOlig[oligNr2].NextOligonukleotid = -1;
+                   StringOfOlig[oligNr2].PrevOligonukleotid = -1;
                }
-               if (oligNr2 < StringOfOlig.Count() - 1)
+               if (oligNr1 < StringOfOlig.Count() - 1)
                {
-                   StringOfOlig[oligNr1].NextOligonukleotid = pom2.NextOligonukleotid;
+                   StringOfOlig[oligNr1].NextOligonukleotid = pom1.NextOligonukleotid;
                }
                else
                {
                    StringOfOlig[oligNr1].NextOligonukleotid = -1;
+               }
+               if (oligNr2 < StringOfOlig.Count() - 1)
+               {
+                   StringOfOlig[oligNr2].NextOligonukleotid = pom2.NextOligonukleotid;
+               }
+               else
+               {
+                   StringOfOlig[oligNr2].NextOligonukleotid = -1;
                }
 
             //  Console.WriteLine("idik: {0}", StringOfOlig[prev1].Ciag);

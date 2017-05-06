@@ -26,7 +26,7 @@ namespace Bio
             population.GeneratePopulation(5);
             population.PrintResult();
 
-            population.Mutation();
+//            population.Mutation();
 
        //     Console.ReadLine();
 

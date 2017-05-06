@@ -20,7 +20,7 @@ namespace Bio
         public void GeneratePopulation(int rozmiar)
         {
             DnaChain sample_base = new DnaChain();
-            sample_base = new DnaChain();
+           // sample_base = new DnaChain();
             sample_base.LoadSamples("9.200-40.txt", 209);
 
             for (int i = 0; i < rozmiar; i++)
@@ -55,7 +55,7 @@ namespace Bio
         {
             int mutationCounter = 0;
             int canMut = 0;
-            //dodanie rozwiązania do bieżącej populacji
+           
             while (mutationCounter < 3 && canMut == 0)
             {
                 Random rand = new Random();

@@ -7,8 +7,8 @@ namespace Bio
 {
     class DnaChain
     {
-        public int SequenceLength { get; set; }                 //maksymalna długość łańcucha
-        public int SequenceMax { get; set; }                    //obecna długość łańcucha                                     
+        public int SequenceLength { get; set; }                 //obecna długość łańcucha
+        public int SequenceMax { get; set; }                    //maksymalna długość łańcucha                                     
         public List<Oligonukleotyd> SampleOligs { get; set; }   //lista wszystkich oligonukleotydów
         public List<Oligonukleotyd> StringOfOlig { get; set; }  //obecny łańcuch oligonukleotydów
         public float Score { get { return(float)SequenceLength / StringOfOlig.Count(); } }
@@ -27,7 +27,7 @@ namespace Bio
 
             int j = 0;                  //porusza się po prawej części połączenia
             int counter_neg = 0;
-            int counter_pos = 0;
+          //  int counter_pos = 0;
 
             ///inny pomysł, to aby użyć contain i sprawdzić, czy lewa strona zawiera np. 3 pierwsze litery prawej
             for (int i = 1; i < 10; i++)                                //zliczanie trafień przy możliwości negatywnych błędów
@@ -85,7 +85,7 @@ namespace Bio
             else
             {
             */
-                if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax)
+                if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax && SampleOligs != null)
                 {
                     SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative;
                     StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
@@ -126,11 +126,11 @@ namespace Bio
         public void GenerateRandom()
         {
             Random rnd = new Random();
-            int choosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());  //losujemy który wybrać z przedziału 0 do maks - tyle ile jest w stworzonym łańcuchu
-            StringOfOlig.Add(SampleOligs[choosen]);                              //pierwszy element
+            int chosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());  //losujemy który wybrać z przedziału 0 do maks - tyle ile jest w stworzonym łańcuchu
+            StringOfOlig.Add(SampleOligs[chosen]);                              //pierwszy element
             SequenceLength = 10;
             Oligonukleotyd temp_olig, temp2_olig;
-            temp_olig = SampleOligs[choosen];
+            temp_olig = SampleOligs[chosen];
             SampleOligs.Remove(temp_olig);                                         //usuwamy go tam gdzie jest
             SampleOligs.Add(temp_olig);                                            //i wstawiamy na koniec
 
@@ -140,9 +140,9 @@ namespace Bio
             {
                 
 
-                choosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());
+                chosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());
                 temp_olig = StringOfOlig.Last();
-                temp2_olig = SampleOligs[choosen];
+                temp2_olig = SampleOligs[chosen];
 
                 finished=connect(temp_olig, temp2_olig, finished);
             }
@@ -187,6 +187,166 @@ namespace Bio
             this.SequenceMax = SequenceMax;
 
             file.Close();
+        }
+        
+
+
+        public void connectingTwoOligs(int first, int second)
+        {
+            int j = 0;                  //porusza się po prawej części połączenia
+            int counter_neg = 0;
+
+            for (int i = 1; i < 10; i++)                               
+            {
+                if (StringOfOlig[first].Ciag[i] == StringOfOlig[second].Ciag[j])
+                {
+                    counter_neg++;
+                    j++;
+                }
+                else if (StringOfOlig[first].Ciag[i] == StringOfOlig[second].Ciag[0])
+                {
+                    j = 1;
+                    counter_neg = 1;
+                }
+                else
+                {
+                    j = 0;
+                    counter_neg = 0;
+                }
+            }
+            StringOfOlig[first].NmbOfNextMatchingNegative = counter_neg;
+
+        }
+
+        public void SwapOlig(int oligNr1, int oligNr2)
+        {
+            Console.WriteLine("które oligonukleotydy zamieniamy: {0} & {1}", oligNr1, oligNr2);
+            //Console.WriteLine("które oligonukleotydy zamieniamy: {0} & {1}", oligNr1, oligNr2);
+            //PrintChain();
+            StringOfOlig[oligNr1].print();
+            StringOfOlig[oligNr2].print();
+            Oligonukleotyd pom1 = new Oligonukleotyd();
+            Oligonukleotyd pom2 = new Oligonukleotyd();
+            pom1.Ciag = StringOfOlig[oligNr1].Ciag;
+            pom2.Ciag = StringOfOlig[oligNr2].Ciag;
+            pom1.ID = StringOfOlig[oligNr1].ID;
+            pom2.ID = StringOfOlig[oligNr2].ID;
+            pom1.PrevOligonukleotid = StringOfOlig[oligNr1].PrevOligonukleotid;
+            pom2.PrevOligonukleotid = StringOfOlig[oligNr2].PrevOligonukleotid;
+            pom1.NextOligonukleotid = StringOfOlig[oligNr1].NextOligonukleotid;
+            pom2.NextOligonukleotid = StringOfOlig[oligNr2].NextOligonukleotid;
+
+
+            /*   int prev1ID = StringOfOlig[oligNr1].PrevOligonukleotid;
+               int next1ID = StringOfOlig[oligNr1].NextOligonukleotid;
+               int prev2ID = StringOfOlig[oligNr2].PrevOligonukleotid;
+               int next2ID = StringOfOlig[oligNr2].NextOligonukleotid;
+               Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} ", prev1ID);*/
+            // StringOfOlig[oligNr1].PrevOligonukleotid
+            // int x = StringOfOlig[oligNr1].PrevOligonukleotid;
+            //  StringOfOlig[x].print();
+            int prev1 = -1, prev2 = -1, next1 = -1, next2 = -1;
+           
+            if (oligNr1 > 0)
+            {
+                prev1 = oligNr1 - 1;
+                StringOfOlig[prev1].NextOligonukleotid = StringOfOlig[oligNr2].ID;
+            }
+            if (oligNr1 < StringOfOlig.Count() - 1)
+            {
+                next1 = oligNr1 + 1;
+                StringOfOlig[next1].PrevOligonukleotid = StringOfOlig[oligNr2].ID;
+            }
+            if (oligNr2 > 0)
+            {
+                prev2 = oligNr2 - 1;
+                StringOfOlig[prev2].NextOligonukleotid = StringOfOlig[oligNr1].ID;
+            }
+            if (oligNr2 < StringOfOlig.Count() - 1)
+            {
+                next2 = oligNr2 + 1;
+                StringOfOlig[next2].PrevOligonukleotid = StringOfOlig[oligNr1].ID;
+            }
+
+            // StringOfOlig[oligNr2].print();
+           
+            StringOfOlig[oligNr1].Ciag = pom2.Ciag;
+            StringOfOlig[oligNr2].Ciag = pom1.Ciag;
+
+            StringOfOlig[oligNr1].print();
+            StringOfOlig[oligNr2].print();
+            Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
+
+            StringOfOlig[oligNr2].ID = pom1.ID;
+            StringOfOlig[oligNr1].ID = pom2.ID;
+
+            Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
+
+            StringOfOlig[oligNr1].NmbOfNextMatchingNegative = 0;
+            StringOfOlig[oligNr2].NmbOfNextMatchingNegative = 0;
+
+
+            
+               if(oligNr1 > 0)
+               {
+                   StringOfOlig[oligNr2].PrevOligonukleotid = pom1.PrevOligonukleotid;
+               }
+               else
+               {
+                   StringOfOlig[oligNr2].PrevOligonukleotid = -1;
+               }
+               if (oligNr2 > 0)
+               {
+                   StringOfOlig[oligNr1].PrevOligonukleotid = pom2.PrevOligonukleotid;
+               }
+               else
+               {
+                   StringOfOlig[oligNr1].PrevOligonukleotid = -1;
+               }
+               if (oligNr1 < StringOfOlig.Count() - 1)
+               {
+                   StringOfOlig[oligNr2].NextOligonukleotid = pom1.NextOligonukleotid;
+               }
+               else
+               {
+                   StringOfOlig[oligNr2].NextOligonukleotid = -1;
+               }
+               if (oligNr2 < StringOfOlig.Count() - 1)
+               {
+                   StringOfOlig[oligNr1].NextOligonukleotid = pom2.NextOligonukleotid;
+               }
+               else
+               {
+                   StringOfOlig[oligNr1].NextOligonukleotid = -1;
+               }
+
+            //  Console.WriteLine("idik: {0}", StringOfOlig[prev1].Ciag);
+
+            if (prev1 > 0)
+            {
+                this.connectingTwoOligs(prev1, oligNr1);
+            }
+            if (next1 > 0)
+            {
+                this.connectingTwoOligs(oligNr1, next1);
+            }
+            if (prev2 > 0)
+            {
+                this.connectingTwoOligs(prev2, oligNr2);
+            }
+            if (next2 > 0)
+            {
+                this.connectingTwoOligs(oligNr2, next2);
+            }
+
+            //zliczanie długości łańcucha
+            SequenceLength = 0;
+            for(int i = 0; i < StringOfOlig.Count() - 1; i++)
+            {
+                SequenceLength = SequenceLength + 10 - StringOfOlig[i].NmbOfNextMatchingNegative;
+            }
+
+
         }
 
     }

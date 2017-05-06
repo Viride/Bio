@@ -53,14 +53,56 @@ namespace Bio
         //Mutacja - skrócenie końcówki mutacji
         public void Mutation()
         {
-            // WHILE (count() of mutations == x)
-            
-            //wybieramy rozwiązanie do mutacji
-            //losujemy dwa miejsca w ciągu
-            //resetujemy next i prev dla sąsiadów wybranych elementów
-            //zamieniamy elementy miejscami w liście
-            //generujemy nowe next i prev dla sąsiadów
-            //sprawdzamy, czy mieści się w SequenceMax, jeśli nie losujemy inne elementy do mutacji, maks 3 próby
+            int mutationCounter = 0;
+            int canMut = 0;
+            //dodanie rozwiązania do bieżącej populacji
+            while (mutationCounter < 3 && canMut == 0)
+            {
+                Random rand = new Random();
+                int size = population.Count();
+                // Console.WriteLine("ile w populacji: {0}", size);
+
+                int chosenSolution = rand.Next(size);   //losuje rozwiązanie z populacji do mutacji
+                population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
+                int solutionSize = population[chosenSolution].StringOfOlig.Count();
+                Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
+
+
+
+                int chosenOlig1 = rand.Next(solutionSize);
+                int chosenOlig2 = rand.Next(solutionSize);
+                while (chosenOlig1 == chosenOlig2)
+                {
+                    chosenOlig2 = rand.Next(size);
+                }
+                Console.WriteLine("Wylosowane oligo do zamiany: {0} {1}", chosenOlig1, chosenOlig2);
+
+                /////////////////////////////////////////
+                DnaChain temp = new DnaChain();
+                temp = population[chosenSolution];
+                //Console.WriteLine("ile w rozwiązaniu: {0}", temp.StringOfOlig.Count()); 
+                temp.SwapOlig(chosenOlig1, chosenOlig2);
+
+                if (temp.SequenceLength > temp.SequenceMax)
+                {
+                    canMut = 0;
+                }
+                else
+                {
+                    canMut = 1;
+                    population.Add(temp);
+                }
+                mutationCounter++;
+
+                if (canMut == 1)
+                {
+                    Console.WriteLine("Mutation done!");
+                    int x = population.Count();
+                    population[x - 1].PrintChain();
+                }
+            }
+
+
         }
 
         //Mutacja
@@ -82,14 +124,22 @@ namespace Bio
         {
 
         }
+
+        //Dodawanie oligo jak rozwiązanie jest zakrótkie
+        public void LongerChain()
+        {
+
+        }
+
+
         //Selekcja
         //dojdzie część rozwiązań z poprzedniego
         public void Selection()
         {
 
             List<DnaChain> temp = new List<DnaChain>();
-            int choosenOne=0;
-            int scoreOfChoosenOne = 0;
+            int chosenOne=0;
+            int scoreOfChosenOne = 0;
 
             for (int i = 0; i < population.Count(); i=i+4)
             {

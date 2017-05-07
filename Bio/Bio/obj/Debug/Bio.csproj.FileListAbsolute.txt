@@ -25,3 +25,9 @@ C:\Users\Ada\Desktop\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.pdb
 C:\Users\Ada\Desktop\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.exe
 C:\Users\Ada\Desktop\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.pdb
 C:\Users\Ada\Desktop\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.csprojResolveAssemblyReference.cache
+C:\Users\pawel\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.exe.config
+C:\Users\pawel\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.exe
+C:\Users\pawel\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\bin\Debug\Bio.pdb
+C:\Users\pawel\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.csprojResolveAssemblyReference.cache
+C:\Users\pawel\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.exe
+C:\Users\pawel\OneDrive\Studia\Bioinformatyka\Bio\Bio\Bio\obj\Debug\Bio.pdb

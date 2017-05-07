@@ -3,7 +3,7 @@
 
 namespace Bio
 {
-    class Oligonukleotyd
+    public class Oligonukleotyd
     {
         public int ID { get; set; }                                         //Identyfikator oligonukleotydu
         public string Ciag { get; set; }                                    //Oligonukleotyd
@@ -19,11 +19,22 @@ namespace Bio
         public Oligonukleotyd()
         {
             Ciag = null;
+            NextOligonukleotid = -1;
+            PrevOligonukleotid = -1;
         }
 
         public Oligonukleotyd(string ciag)
         {
             this.Ciag = ciag;
+            NextOligonukleotid = -1;
+            PrevOligonukleotid = -1;
+        }
+
+        public void CopyFrom( Oligonukleotyd sample)
+        {
+            Ciag = sample.Ciag;
+            ID = sample.ID;
+            PrevOligonukleotid = sample.PrevOligonukleotid;
         }
 
         public void print()

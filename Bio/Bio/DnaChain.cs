@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bio
 {
-    class DnaChain
+    public class DnaChain
     {
         public int SequenceLength { get; set; }                 //obecna długość łańcucha
         public int SequenceMax { get; set; }                    //maksymalna długość łańcucha                                     
@@ -22,9 +22,13 @@ namespace Bio
             StringOfOlig = new List<Oligonukleotyd>();
         }
 
-        public bool connect(Oligonukleotyd temp_olig, Oligonukleotyd temp2_olig, bool finished)
+        public bool connect(Oligonukleotyd temp_olig_of, Oligonukleotyd temp2_olig_of, bool finished)
         {
-
+            Oligonukleotyd temp_olig, temp2_olig;
+            temp_olig = new Oligonukleotyd();
+            temp2_olig = new Oligonukleotyd();
+            temp_olig.CopyFrom(temp_olig_of);
+            temp2_olig.CopyFrom(temp2_olig_of);
             int j = 0;                  //porusza się po prawej części połączenia
             int counter_neg = 0;
           //  int counter_pos = 0;
@@ -50,8 +54,24 @@ namespace Bio
             }
             temp_olig.NmbOfNextMatchingNegative = counter_neg;
 
+            if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax && SampleOligs != null)
+            {
+                SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative;
+                StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
+                StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                //      StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
+                temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
+                StringOfOlig.Add(temp2_olig);
+                SampleOligs.Remove(temp2_olig_of);                                         //usuwamy go tam gdzie jest
+                SampleOligs.Add(temp2_olig_of);                                            //i wstawiamy na koniec
+            }
+            else
+            {
+                finished = true;
+            }
 
-            /*counter_pos = 0;
+            /*
+            counter_pos = 0;
             j = 0;
             for (int i = 1; i < 10; i++)                                //zliczanie trafień, przy możliwości pozytywnych błędów
             {
@@ -85,23 +105,9 @@ namespace Bio
             else
             {
             */
-                if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax && SampleOligs != null)
-                {
-                    SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative;
-                    StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
-                    StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
-              //      StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
-                    temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
-                    StringOfOlig.Add(temp2_olig);
-                    SampleOligs.Remove(temp2_olig);                                         //usuwamy go tam gdzie jest
-                    SampleOligs.Add(temp2_olig);                                            //i wstawiamy na koniec
-                }
-                else
-                {
-                    finished = true;
-                }
+            //tu był ostatni nie skomentowany fragment
 
-         //   }
+            //   }
 
             return finished;
         }
@@ -111,13 +117,13 @@ namespace Bio
         {
             for (int i=0; i < StringOfOlig.Count(); i++)  //należy uwzględnić nakładanie się elementów
             {
-                Console.WriteLine("Ciag: {0}, negative: {1}, moje ID: {2}, ID next {3}",
+                Console.WriteLine("Ciag: {0}, negative: {1}, moje ID: {2},\tID next {3}",
                     StringOfOlig[i].Ciag,
                     StringOfOlig[i].NmbOfNextMatchingNegative,
                     StringOfOlig[i].ID,
                     StringOfOlig[i].NextOligonukleotid);
             }
-            Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}", Score, SequenceLength, StringOfOlig.Count());
+            Console.WriteLine("Score: {0:f3}, n: {1}, Nmb of elem. {2}\n", Score, SequenceLength, StringOfOlig.Count());
         }
 
         public void PrintChainSummary()
@@ -145,10 +151,21 @@ namespace Bio
                 chosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());
                 temp_olig = StringOfOlig.Last();
                 temp2_olig = SampleOligs[chosen];
-
                 finished=connect(temp_olig, temp2_olig, finished);
             }
 
+        }
+
+        public void CheckSum()
+        {
+            for (int i = 0; i < StringOfOlig.Count()-1; i++)
+            {
+                for (int j = i + 1; j < StringOfOlig.Count(); j++)
+                {
+                    if (StringOfOlig[i].ID == StringOfOlig[j].ID)
+                        Console.WriteLine("We got a fuc***g problem over here");
+                }
+            }
         }
 
         public void LoadSamples(string file_name)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bio
 {
-    class Population
+    public class Population
     {
         //  Wydaje mi się, że najłatwiej będzie pracować na listach, bo można swobodnie do nich dodawać i odejmować, a do elementów
         //  można się odwoływać jak w tablicy
@@ -41,7 +41,10 @@ namespace Bio
             {
                // population[i].PrintChainSummary();
                 population[i].PrintChain();
+                population[i].CheckSum();
+
             }
+            Console.WriteLine("Finito\n");
         }
 
 

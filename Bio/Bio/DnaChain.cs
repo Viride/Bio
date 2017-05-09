@@ -265,7 +265,7 @@ namespace Bio
             // int x = StringOfOlig[oligNr1].PrevOligonukleotid;
             //  StringOfOlig[x].print();
             int prev1 = -1, prev2 = -1, next1 = -1, next2 = -1;
-           
+           //zapisuje sąsiadom nowe wartości zamienionych oligo
             if (oligNr1 > 0)
             {
                 prev1 = oligNr1 - 1;
@@ -367,6 +367,67 @@ namespace Bio
 
 
         }
+
+
+        public void SwapChainParts(int changingPoint)
+        {
+            int oligNr1 = 0, oligNr2 = changingPoint, oligNr3 = changingPoint + 1, oligNr4 = this.StringOfOlig.Count() - 1;
+
+            Oligonukleotyd pom1 = new Oligonukleotyd();
+            Oligonukleotyd pom2 = new Oligonukleotyd();
+            pom1.Ciag = StringOfOlig[oligNr1].Ciag;
+            pom2.Ciag = StringOfOlig[oligNr2].Ciag;
+            pom1.ID = StringOfOlig[oligNr1].ID;
+            pom2.ID = StringOfOlig[oligNr2].ID;
+            pom1.PrevOligonukleotid = StringOfOlig[oligNr1].PrevOligonukleotid;
+            pom2.PrevOligonukleotid = StringOfOlig[oligNr2].PrevOligonukleotid;
+            pom1.NextOligonukleotid = StringOfOlig[oligNr1].NextOligonukleotid;
+            pom2.NextOligonukleotid = StringOfOlig[oligNr2].NextOligonukleotid;
+            Oligonukleotyd pom3 = new Oligonukleotyd();
+            Oligonukleotyd pom4 = new Oligonukleotyd();
+            pom3.Ciag = StringOfOlig[oligNr3].Ciag;
+            pom4.Ciag = StringOfOlig[oligNr4].Ciag;
+            pom3.ID = StringOfOlig[oligNr3].ID;
+            pom4.ID = StringOfOlig[oligNr4].ID;
+            pom3.PrevOligonukleotid = StringOfOlig[oligNr3].PrevOligonukleotid;
+            pom4.PrevOligonukleotid = StringOfOlig[oligNr4].PrevOligonukleotid;
+            pom3.NextOligonukleotid = StringOfOlig[oligNr3].NextOligonukleotid;
+            pom4.NextOligonukleotid = StringOfOlig[oligNr4].NextOligonukleotid;
+
+            //nowy początek
+            StringOfOlig[oligNr3].PrevOligonukleotid = -1;
+            //koniec nowego początku
+            StringOfOlig[oligNr4].NextOligonukleotid = pom1.ID;
+            //początek nowej drugiej części
+            StringOfOlig[oligNr1].PrevOligonukleotid = pom4.ID;
+            //koniec nowej drugiej części
+            StringOfOlig[oligNr2].NextOligonukleotid = -1;
+            StringOfOlig[oligNr2].NmbOfNextMatchingNegative = 0;
+
+
+            /*
+            //na miejsce pierwszego
+            StringOfOlig[oligNr1].ID = pom3.ID;
+            StringOfOlig[oligNr1].Ciag = pom3.Ciag;
+            //na miejsce drugiego
+            StringOfOlig[oligNr2].ID = pom4.ID;
+            StringOfOlig[oligNr2].Ciag = pom4.Ciag;
+            */
+
+
+            this.connectingTwoOligs(oligNr4, oligNr1);
+
+            //zliczanie długości łańcucha
+            SequenceLength = 0;
+            for (int i = 0; i < StringOfOlig.Count() - 1; i++)
+            {
+                SequenceLength = SequenceLength + 10 - StringOfOlig[i].NmbOfNextMatchingNegative;
+            }
+
+        }
+
+
+
 
     }
 }

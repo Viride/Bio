@@ -82,8 +82,35 @@ namespace Bio
 
                 /////////////////////////////////////////
                 DnaChain temp = new DnaChain();
-                temp = population[chosenSolution];
+                //temp = population[chosenSolution];
                 //Console.WriteLine("ile w rozwiązaniu: {0}", temp.StringOfOlig.Count()); 
+                temp.SequenceLength = population[chosenSolution].SequenceLength;
+                temp.SequenceMax = population[chosenSolution].SequenceMax;
+              //  temp.SampleOligs = population[chosenSolution].SampleOligs;
+               // temp.StringOfOlig = population[chosenSolution].StringOfOlig;
+               for(int i = 0; i < population[chosenSolution].SampleOligs.Count(); i++)
+                {
+                    Oligonukleotyd pom1 = new Oligonukleotyd();
+                    pom1.Ciag = population[chosenSolution].SampleOligs[i].Ciag;
+                    pom1.ID = population[chosenSolution].SampleOligs[i].ID;
+                    pom1.PrevOligonukleotid = population[chosenSolution].SampleOligs[i].PrevOligonukleotid;
+                    pom1.NextOligonukleotid = population[chosenSolution].SampleOligs[i].NextOligonukleotid;
+
+                    temp.SampleOligs.Add(pom1);
+                }
+                for (int i = 0; i < population[chosenSolution].StringOfOlig.Count(); i++)
+                {
+                    Oligonukleotyd pom2 = new Oligonukleotyd();
+                    pom2.Ciag = population[chosenSolution].StringOfOlig[i].Ciag;
+                    pom2.ID = population[chosenSolution].StringOfOlig[i].ID;
+                    pom2.PrevOligonukleotid = population[chosenSolution].StringOfOlig[i].PrevOligonukleotid;
+                    pom2.NextOligonukleotid = population[chosenSolution].StringOfOlig[i].NextOligonukleotid;
+
+                    temp.StringOfOlig.Add(pom2);
+
+                }
+
+
                 temp.SwapOlig(chosenOlig1, chosenOlig2);
 
                 if (temp.SequenceLength > temp.SequenceMax)
@@ -111,8 +138,47 @@ namespace Bio
         //Mutacja
         public void Mutation2()
         {
+            int mutationCounter = 0;
+            int canMut = 0;
+            /*
+            while (mutationCounter < 3 && canMut == 0)
+            {
+                Random rand = new Random();
+                int size = population.Count();
+                // Console.WriteLine("ile w populacji: {0}", size);
 
+                int chosenSolution = rand.Next(size);   //losuje rozwiązanie z populacji do mutacji
+                population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
+             //   int solutionSize = population[chosenSolution].StringOfOlig.Count();
+             //   Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
 
+               
+                /////////////////////////////////////////
+                DnaChain temp = new DnaChain();
+                temp = population[chosenSolution];
+                //Console.WriteLine("ile w rozwiązaniu: {0}", temp.StringOfOlig.Count()); 
+                temp.SwapOlig(chosenOlig1, chosenOlig2);
+
+                if (temp.SequenceLength > temp.SequenceMax)
+                {
+                    canMut = 0;
+                }
+                else
+                {
+                    canMut = 1;
+                    population.Add(temp);
+                }
+                mutationCounter++;
+
+                if (canMut == 1)
+                {
+                    Console.WriteLine("Mutation done!");
+                    int x = population.Count();
+                    population[x - 1].PrintChain();
+                }
+            }
+
+    */
         }
 
         //Mutacja

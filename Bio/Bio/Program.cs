@@ -23,12 +23,14 @@ namespace Bio
             //test1.PrintChainSummary();
 
             Population population = new Population();
-            population.GeneratePopulation(100);
+            population.GeneratePopulation(3);
             population.PrintResult();
 
-//            population.Mutation();
+            population.Mutation();
 
-            Console.ReadLine();
+
+            population.PrintResult();
+            //   Console.ReadLine();
 
         }
     }

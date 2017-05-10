@@ -27,9 +27,10 @@ namespace Bio
             population.PrintResult();
 
             population.Mutation();
-
+       
             population.Mutation2();
 
+            population.Mutation3();
 
             population.PrintResult();
             //   Console.ReadLine();

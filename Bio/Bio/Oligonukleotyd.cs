@@ -37,6 +37,19 @@ namespace Bio
             PrevOligonukleotid = sample.PrevOligonukleotid;
         }
 
+        public void CopyFrom2(Oligonukleotyd olig)
+        {
+            Ciag = olig.Ciag;
+            ID = olig.ID;
+            PrevOligonukleotid = olig.PrevOligonukleotid;
+            NextOligonukleotid = olig.NextOligonukleotid;
+        }
+        public void CopyFrom3(Oligonukleotyd olig)
+        {
+            Ciag = olig.Ciag;
+            ID = olig.ID;
+        }
+
         public void print()
         {
             if (Ciag != null)

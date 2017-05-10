@@ -151,12 +151,14 @@ namespace Bio
                                                           //   int solutionSize = population[chosenSolution].StringOfOlig.Count();
                                                           //   Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
 
-
+              
+                int solutionSize = population[chosenSolution].StringOfOlig.Count();
+                Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
                 /////////////////////////////////////////
                 DnaChain temp = new DnaChain();
-
+                DnaChain temp2 = new DnaChain();
                 //Console.WriteLine("ile w rozwiązaniu: {0}", temp.StringOfOlig.Count()); 
-                temp.SequenceLength = population[chosenSolution].SequenceLength;
+                temp.SequenceLength = 0;
                 temp.SequenceMax = population[chosenSolution].SequenceMax;
 
                 for (int i = 0; i < population[chosenSolution].SampleOligs.Count(); i++)
@@ -168,8 +170,10 @@ namespace Bio
                     pom1.NextOligonukleotid = population[chosenSolution].SampleOligs[i].NextOligonukleotid;
 
                     temp.SampleOligs.Add(pom1);
+                    temp2.SampleOligs.Add(pom1);
                 }
-                for (int i = 0; i < population[chosenSolution].StringOfOlig.Count(); i++)
+                
+            /*    for (int i = 0; i < population[chosenSolution].StringOfOlig.Count(); i++)
                 {
                     Oligonukleotyd pom2 = new Oligonukleotyd();
                     pom2.Ciag = population[chosenSolution].StringOfOlig[i].Ciag;
@@ -180,75 +184,93 @@ namespace Bio
 
                     temp.StringOfOlig.Add(pom2);
 
-                }
+                }*/
                 ////////////////////////////////////////
-                int min = -1;
+
+                int min = 1000000000;
                 int leftOlig = -1; //, rightOlig = -1;
-                for(int i = 0; i < temp.StringOfOlig.Count() - 1; i++) //szukam miejsca zamiany
+                for(int i = 0; i < population[chosenSolution].StringOfOlig.Count() - 1; i++) //szukam miejsca zamiany
                 {
-                    if(temp.StringOfOlig[i].NmbOfNextMatchingNegative < min)
+                    if(population[chosenSolution].StringOfOlig[i].NmbOfNextMatchingNegative < min)
                     {
-                        min = temp.StringOfOlig[i].NmbOfNextMatchingNegative;
+                        min = population[chosenSolution].StringOfOlig[i].NmbOfNextMatchingNegative;
                         leftOlig = i;
                     //    rightOlig = i+1;
                     }
                 }
 
-                temp.SwapChainParts(leftOlig);
+             //   temp.SwapChainParts(leftOlig);
+                //////
+                //ZAMIANA//
+                
 
+                //Console.WriteLine("ile w rozwiązaniu: {0}", temp.StringOfOlig.Count()); 
+          //      temp2.SequenceLength = 0;//ZLICZANIE  DODAĆ
+           //     temp2.SequenceMax = temp.SequenceMax;
 
-                DnaChain temp2 = new DnaChain();
-                temp2.SequenceLength = temp.SequenceLength;
-                temp2.SequenceMax = temp.SequenceMax;
-
-                int counter = 0;
-                int currentID = temp.StringOfOlig[0].ID;
-                while(counter < temp.StringOfOlig.Count())
+                int counter = leftOlig+1; int nrOlig1 = 0;
+                while (counter < population[chosenSolution].StringOfOlig.Count())
                 {
-                    temp.StringOfOlig[currentID];
 
-                    for (int k = 0; k < population[chosenSolution].SampleOligs.Count(); k++)
-                    {
-                        Oligonukleotyd pom1 = new Oligonukleotyd();
-                        pom1.Ciag = population[chosenSolution].SampleOligs[k].Ciag;
-                        pom1.ID = population[chosenSolution].SampleOligs[k].ID;
-                        pom1.PrevOligonukleotid = population[chosenSolution].SampleOligs[k].PrevOligonukleotid;
-                        pom1.NextOligonukleotid = population[chosenSolution].SampleOligs[k].NextOligonukleotid;
+                    Oligonukleotyd pom = new Oligonukleotyd();
+                    pom.Ciag = population[chosenSolution].StringOfOlig[counter].Ciag;
+                    pom.ID = population[chosenSolution].StringOfOlig[counter].ID;
+                    pom.PrevOligonukleotid = population[chosenSolution].StringOfOlig[counter].PrevOligonukleotid;
+                    pom.NextOligonukleotid = population[chosenSolution].StringOfOlig[counter].NextOligonukleotid;
+                    pom.NmbOfNextMatchingNegative = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchingNegative;
 
-                        temp.SampleOligs.Add(pom1);
-                    }
-                    for (int k = 0; k < population[chosenSolution].StringOfOlig.Count(); k++)
-                    {
-                        Oligonukleotyd pom2 = new Oligonukleotyd();
-                        pom2.Ciag = population[chosenSolution].StringOfOlig[k].Ciag;
-                        pom2.ID = population[chosenSolution].StringOfOlig[k].ID;
-                        pom2.PrevOligonukleotid = population[chosenSolution].StringOfOlig[k].PrevOligonukleotid;
-                        pom2.NextOligonukleotid = population[chosenSolution].StringOfOlig[k].NextOligonukleotid;
-                        pom2.NmbOfNextMatchingNegative = population[chosenSolution].StringOfOlig[k].NmbOfNextMatchingNegative;
+                    temp.StringOfOlig.Add(pom);
+                    Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
+                    nrOlig1++;
+                    counter++;
+                } //koniec ZAMIANY
+                Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
+                //nowy początek
+                temp.StringOfOlig[0].PrevOligonukleotid = -1;
+                //koniec nowego początku
+                int check = 0;
+                if(nrOlig1 != 0)
+                {
+                    check = nrOlig1 - 1;
+                }
+                Console.WriteLine("tuuu {0} {1}", check, counter - 1);
+                temp.StringOfOlig[check].NextOligonukleotid = population[chosenSolution].StringOfOlig[0].ID;
 
-                        temp.StringOfOlig.Add(pom2);
+                counter = 0; 
+                while (counter <= leftOlig)
+                {
 
-                    }
+                    Oligonukleotyd pom = new Oligonukleotyd();
+                    pom.Ciag = population[chosenSolution].StringOfOlig[counter].Ciag;
+                    pom.ID = population[chosenSolution].StringOfOlig[counter].ID;
+                    pom.PrevOligonukleotid = population[chosenSolution].StringOfOlig[counter].PrevOligonukleotid;
+                    pom.NextOligonukleotid = population[chosenSolution].StringOfOlig[counter].NextOligonukleotid;
+                    pom.NmbOfNextMatchingNegative = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchingNegative;
+
+                    temp.StringOfOlig.Add(pom);
+
+                    
+                    counter++;
+                } //koniec ZAMIANY2
+                //początek nowej drugiej części
+                temp.StringOfOlig[nrOlig1].PrevOligonukleotid = temp.StringOfOlig[check].ID;
+                //koniec nowej drugiej części
+                temp.StringOfOlig[temp.StringOfOlig.Count() - 1].NextOligonukleotid = -1;
+                temp.StringOfOlig[temp.StringOfOlig.Count() - 1].NmbOfNextMatchingNegative = 0;
 
 
+                //zliczanie pokrycia             
+                temp.connectingTwoOligs(nrOlig1-1, nrOlig1);
 
 
-
-
-
+                //zliczanie długości łańcucha
+                temp.SequenceLength = 0;
+                for (int i = 0; i < temp.StringOfOlig.Count() - 1; i++)
+                {
+                    temp.SequenceLength = temp.SequenceLength + 10 - temp.StringOfOlig[i].NmbOfNextMatchingNegative;
                 }
 
 
-
-
-
-
-
-
-
-
-                //Console.WriteLine("ile w rozwiązaniu: {0}", temp.StringOfOlig.Count()); 
-                temp.SwapOlig(chosenOlig1, chosenOlig2);
 
                 if (temp.SequenceLength > temp.SequenceMax)
                 {
@@ -263,7 +285,7 @@ namespace Bio
 
                 if (canMut == 1)
                 {
-                    Console.WriteLine("Mutation done!");
+                    Console.WriteLine("Mutation2 done!");
                     int x = population.Count();
                     population[x - 1].PrintChain();
                 }

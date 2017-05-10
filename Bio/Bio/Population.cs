@@ -47,6 +47,17 @@ namespace Bio
             Console.WriteLine("Finito\n");
         }
 
+        public void PrintPopulationResult()
+        {
+            Console.WriteLine("\n\nObecna populacja:\n");
+            Console.WriteLine("Score:\t\tLength:\tNmb of elem.:\n");
+            for (int i = 0; i < population.Count(); i++)
+            {
+                Console.WriteLine("{0:f6}\t{1}\t{2}", population[i].Score, population[i].SequenceLength,population[i].StringOfOlig.Count() );
+            }
+            Console.WriteLine("Koniec wypisywania. Rozmiar populacji: {0}\n\n", population.Count());
+        }
+
 
 
         //  Nowo powstałe rozwiązania (mutacja, krzyżowanie) dodajemy do populacji a na koniec 
@@ -319,16 +330,35 @@ namespace Bio
         //dojdzie część rozwiązań z poprzedniego
         public void Selection()
         {
-
+            int N = 4;
             List<DnaChain> temp = new List<DnaChain>();
             int chosenOne=0;
-            int scoreOfChosenOne = 0;
-
-            for (int i = 0; i < population.Count(); i=i+4)
+            int m = population.Count() / N;
+            for (int i = 0; i < m * N; i = i + N)
             {
-                                
+                chosenOne = i;
+                for (int j = 1; j < N; j++)
+                {
+                    if (population[chosenOne].Score > population[i + j].Score)
+                    {
+                        chosenOne = i + j;
+                    }
+                }
+                temp.Add(population[chosenOne]);
             }
-
+            if (population.Count() % N != 0)
+            {
+                chosenOne = m * N;
+                for (int i = m * N; i < population.Count(); i++)
+                {
+                    if (population[chosenOne].Score > population[i].Score)
+                    {
+                        chosenOne = i;
+                    }
+                }
+                temp.Add(population[chosenOne]);
+            }
+            population = temp;
         }
     }
 }

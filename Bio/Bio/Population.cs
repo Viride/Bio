@@ -185,9 +185,9 @@ namespace Bio
                 int leftOlig = -1; //, rightOlig = -1;
                 for(int i = 0; i < population[chosenSolution].StringOfOlig.Count() - 1; i++) //szukam miejsca zamiany
                 {
-                    if(population[chosenSolution].StringOfOlig[i].NmbOfNextMatchingNegative < min)
+                    if(population[chosenSolution].StringOfOlig[i].NmbOfNextMatchNeg < min)
                     {
-                        min = population[chosenSolution].StringOfOlig[i].NmbOfNextMatchingNegative;
+                        min = population[chosenSolution].StringOfOlig[i].NmbOfNextMatchNeg;
                         leftOlig = i;
                     //    rightOlig = i+1;
                     }
@@ -202,7 +202,7 @@ namespace Bio
                     pom.ID = population[chosenSolution].StringOfOlig[counter].ID;
                     pom.PrevOligonukleotid = population[chosenSolution].StringOfOlig[counter].PrevOligonukleotid;
                     pom.NextOligonukleotid = population[chosenSolution].StringOfOlig[counter].NextOligonukleotid;
-                    pom.NmbOfNextMatchingNegative = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchingNegative;
+                    pom.NmbOfNextMatchNeg = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchNeg;
 
                     temp.StringOfOlig.Add(pom);
                     Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
@@ -230,7 +230,7 @@ namespace Bio
                     pom.ID = population[chosenSolution].StringOfOlig[counter].ID;
                     pom.PrevOligonukleotid = population[chosenSolution].StringOfOlig[counter].PrevOligonukleotid;
                     pom.NextOligonukleotid = population[chosenSolution].StringOfOlig[counter].NextOligonukleotid;
-                    pom.NmbOfNextMatchingNegative = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchingNegative;
+                    pom.NmbOfNextMatchNeg = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchNeg;
 
                     temp.StringOfOlig.Add(pom);
 
@@ -241,7 +241,7 @@ namespace Bio
                 temp.StringOfOlig[nrOlig1].PrevOligonukleotid = temp.StringOfOlig[check].ID;
                 //koniec nowej drugiej części
                 temp.StringOfOlig[temp.StringOfOlig.Count() - 1].NextOligonukleotid = -1;
-                temp.StringOfOlig[temp.StringOfOlig.Count() - 1].NmbOfNextMatchingNegative = 0;
+                temp.StringOfOlig[temp.StringOfOlig.Count() - 1].NmbOfNextMatchNeg = 0;
 
 
                 //zliczanie pokrycia             
@@ -252,7 +252,7 @@ namespace Bio
                 temp.SequenceLength = 0;
                 for (int i = 0; i < temp.StringOfOlig.Count() - 1; i++)
                 {
-                    temp.SequenceLength = temp.SequenceLength + 10 - temp.StringOfOlig[i].NmbOfNextMatchingNegative;
+                    temp.SequenceLength = temp.SequenceLength + 10 - temp.StringOfOlig[i].NmbOfNextMatchNeg;
                 }
 
 
@@ -365,7 +365,7 @@ namespace Bio
                 temp.SequenceLength = 0;
                 for (int i = 0; i < temp.StringOfOlig.Count() - 1; i++)
                 {
-                    temp.SequenceLength = temp.SequenceLength + 10 - temp.StringOfOlig[i].NmbOfNextMatchingNegative;
+                    temp.SequenceLength = temp.SequenceLength + 10 - temp.StringOfOlig[i].NmbOfNextMatchNeg;
                 }
 
 
@@ -400,13 +400,218 @@ namespace Bio
         //Krzyżowanie
         public void Crossing()
         {
+            
+            //wylosować dwa łańcuchy, skopiować ich dane do nowych
+            Random rand = new Random();
+            int crossPlace = -1;
+            DnaChain temp1;
+            DnaChain temp2;
+            int choosenOne, choosenTwo;
+            do
+            {
+                choosenOne = rand.Next(population.Count());                
+                do
+                {
+                    choosenTwo = rand.Next(population.Count());
+                } while (choosenTwo == choosenOne);
+                temp1 = new DnaChain();
+                temp2 = new DnaChain();
+                temp1.CopyDnaChain(population[choosenOne]);
+                temp2.CopyDnaChain(population[choosenTwo]);
+
+                int NmbOfTry = temp1.StringOfOlig.Count() - 1;
+                if (temp2.StringOfOlig.Count() - 1 < NmbOfTry){
+                    NmbOfTry = temp2.StringOfOlig.Count() - 1;
+                }
+                for (int i = 0; i < NmbOfTry; i++)
+                {
+                    if (temp1.StringOfOlig[i].NmbOfNextMatchNeg == 0 &&
+                        temp2.StringOfOlig[i].NmbOfNextMatchNeg < 2)
+                    {
+                        crossPlace = i;
+                        break;
+                    }
+                    else
+                        if (temp1.StringOfOlig[i].NmbOfNextMatchNeg < 2 &&
+                               temp2.StringOfOlig[i].NmbOfNextMatchNeg == 0)
+                    {
+                        crossPlace = i;
+                        break;
+                    }
+                }
+            } while (crossPlace == -1);
+
+
+
+            //Console.Write("Kopiowanie skończone, punkt zamiany wybrany\n" +
+            //    "Zaczynam składanie nowych łańcuchów.............. ");
+
+            //zamienić i naprawić sprawdzając, czy nie powtarzają się
+            DnaChain new1, new2;
+            new1 = new DnaChain();
+            new2 = new DnaChain();
+            //Kopiowanie niezmiennych danych
+            new1.SampleOligs = temp1.SampleOligs;
+            new1.SequenceMax = temp1.SequenceMax;
+            new2.SampleOligs = temp2.SampleOligs;
+            new2.SequenceMax = temp2.SequenceMax;
+
+            //Kopiowanie początków
+            for(int i = 0; i < crossPlace+1; i++)
+            {
+                new1.StringOfOlig.Add(temp1.StringOfOlig[i]);
+                new2.StringOfOlig.Add(temp2.StringOfOlig[i]);
+            }
+
+            //Kopiowanie końców z uwzględnieniem opcji powtórzenia (może wystąpić tylko do crossPlace
+            for (int i = crossPlace+1; i < temp1.StringOfOlig.Count(); i++)
+            {
+                if (new2.StringOfOlig.Exists(x => x.ID == temp1.StringOfOlig[i].ID) == false)
+                {
+                    new2.StringOfOlig.Add(temp1.StringOfOlig[i]);
+                }
+            }
+
+            for (int i = crossPlace + 1; i < temp2.StringOfOlig.Count(); i++)
+            {
+                if (new1.StringOfOlig.Exists(x => x.ID == temp2.StringOfOlig[i].ID) == false)
+                {
+                    new1.StringOfOlig.Add(temp2.StringOfOlig[i]);
+                }
+            }
+            //Console.Write("Skończono tworzenie nowych łańcuchów\n" +
+            //    "Zaczynam naprawę łańcucha..........");
+
+            int stoppedRepair = -1;
+            new1.SequenceLength = 10;
+            new2.SequenceLength = 10;
+            for (int i = 0; i < new1.StringOfOlig.Count()-1; i++)
+            {
+                if (new1.StringOfOlig[i].NextOligonukleotid == new1.StringOfOlig[i + 1].ID)
+                {
+                    if (new1.SequenceLength + 10 - new1.StringOfOlig[i].NmbOfNextMatchNeg < new1.SequenceMax)
+                    {
+                        new1.SequenceLength += 10 - new1.StringOfOlig[i].NmbOfNextMatchNeg;
+                    }
+                    else
+                    {
+                        stoppedRepair = i;
+                        new1.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        //Console.WriteLine("koniec miejsca");
+                    }
+                }
+                else
+                {
+                    new1.StringOfOlig[i].NmbOfNextMatchNeg =
+                        new1.crossConnect(new1.StringOfOlig[i], new1.StringOfOlig[i + 1]);
+                    if (new1.SequenceLength + 10 - new1.StringOfOlig[i].NmbOfNextMatchNeg < new1.SequenceMax)
+                    {
+                        new1.SequenceLength += 10 - new1.StringOfOlig[i].NmbOfNextMatchNeg;
+                        new1.StringOfOlig[i + 1].NmbOfPrevMatchNeg = new1.StringOfOlig[i].NmbOfNextMatchNeg;
+                        new1.StringOfOlig[i].NextOligonukleotid = new1.StringOfOlig[i + 1].ID;
+                        new1.StringOfOlig[i + 1].PrevOligonukleotid = new1.StringOfOlig[i].ID;
+                    }
+                    else
+                    {
+                        stoppedRepair = i;
+                        new1.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        //Console.WriteLine("koniec miejsca");
+
+                    }
+                }
+                
+            }
+            if (stoppedRepair != -1)
+            {
+                for (int i = new1.StringOfOlig.Count() - 1; i > stoppedRepair; i--)
+                {
+                    new1.StringOfOlig.Remove(new1.StringOfOlig[i]);
+                    //Console.WriteLine("usuwałem");
+                }
+            }
+
+
+            stoppedRepair = -1;
+
+            for (int i = 0; i < new2.StringOfOlig.Count() - 1; i++)
+            {
+                if (new2.StringOfOlig[i].NextOligonukleotid == new2.StringOfOlig[i + 1].ID)
+                {
+                    if (new2.SequenceLength + 10 - new2.StringOfOlig[i].NmbOfNextMatchNeg < new2.SequenceMax)
+                    {
+                        new2.SequenceLength += 10 - new2.StringOfOlig[i].NmbOfNextMatchNeg;
+                    }
+                    else
+                    {
+                        stoppedRepair = i;
+                        new2.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        //Console.WriteLine("koniec miejsca");
+                    }
+                }
+                else
+                {
+                    new2.StringOfOlig[i].NmbOfNextMatchNeg =
+                        new2.crossConnect(new2.StringOfOlig[i], new2.StringOfOlig[i + 1]);
+                    if (new2.SequenceLength + 10 - new2.StringOfOlig[i].NmbOfNextMatchNeg < new2.SequenceMax)
+                    {
+                        new2.SequenceLength += 10 - new2.StringOfOlig[i].NmbOfNextMatchNeg;
+                        new2.StringOfOlig[i + 1].NmbOfPrevMatchNeg = new2.StringOfOlig[i].NmbOfNextMatchNeg;
+                        new2.StringOfOlig[i].NextOligonukleotid = new2.StringOfOlig[i + 1].ID;
+                        new2.StringOfOlig[i + 1].PrevOligonukleotid = new2.StringOfOlig[i].ID;
+                    }
+                    else
+                    {
+                        stoppedRepair = i;
+                        new2.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        //Console.WriteLine("koniec miejsca");
+
+                    }
+                }
+            }
+            //jeżeli długość jest większa niż maks
+            if (stoppedRepair != -1)
+            {
+                for (int i = new2.StringOfOlig.Count() - 1; i > stoppedRepair; i--)
+                {
+                    new2.StringOfOlig.Remove(new2.StringOfOlig[i]);
+                    //Console.WriteLine("usuwałem");
+                }
+            }
+            //Console.Write("Skończono naprawę łańcucha\n");
+
+            //Console.Write("Rozpoczęto naprawę SampleOligs.........  ");
+
+            //przesuwa użyte na koniec
+            for (int i = 0; i < new1.StringOfOlig.Count(); i ++)
+            {
+                Oligonukleotyd temp;
+                temp = new1.SampleOligs.Find(x => x.ID == temp2.StringOfOlig[i].ID);
+                new1.SampleOligs.Remove(temp);
+                new1.SampleOligs.Add(temp);
+            }
+            //Console.Write("Skończono naprawę SampleOligs\n");
+            population.Add(new1);
+            population.Add(new2);
 
         }
 
         //Dodawanie oligo jak rozwiązanie jest zakrótkie
         public void LongerChain()
         {
-
+            Random rand = new Random();
+            Oligonukleotyd temp_olig, temp2_olig;
+            bool finished=true;
+            for (int i = 0; i < population.Count(); i++)
+            {
+                
+                if (population[i].SequenceLength < 200)
+                {
+                    int choosenOne = rand.Next(population[i].SampleOligs.Count() - population[i].StringOfOlig.Count());
+                    temp_olig = population[i].StringOfOlig.Last();
+                    temp2_olig = population[i].SampleOligs[choosenOne];
+                    finished = population[i].connect(temp_olig, temp2_olig, finished);
+                }
+            }
 
         }
 
@@ -415,6 +620,7 @@ namespace Bio
         //dojdzie część rozwiązań z poprzedniego
         public void Selection()
         {
+            
             int N = 4;
             List<DnaChain> temp = new List<DnaChain>();
             int chosenOne=0;
@@ -445,5 +651,21 @@ namespace Bio
             }
             population = temp;
         }
+
+        public void Shuffle()
+        {
+            Random rand = new Random();
+            int n = population.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rand.Next(n + 1);
+                DnaChain value = population[k];
+                population[k] = population[n];
+                population[n] = value;
+            }
+
+        }
+
     }
 }

@@ -23,17 +23,30 @@ namespace Bio
             //test1.PrintChainSummary();
 
             Population population = new Population();
-            population.GeneratePopulation(3);
-            population.PrintResult();
+            population.GeneratePopulation(40);
+            population.PrintPopulationResult();
 
-            population.Mutation();
-       
-            population.Mutation2();
+            //population.Mutation();
+            //population.Mutation2();
+            //population.Mutation3();
+            //population.Crossing();
 
-            population.Mutation3();
+            for (int j = 0; j < 100; j++)
+            {
+                for (int i = 0; i < 40; i++) 
+                {
+                    //population.Mutation();
+                    population.Mutation2();
+                    population.Mutation3();
+                    population.Crossing();
+                    population.LongerChain();
+                }
+                population.Shuffle();
+                population.Selection();
+            }
 
-            population.PrintResult();
-            //   Console.ReadLine();
+            population.PrintPopulationResult();
+            Console.ReadLine();
 
         }
     }

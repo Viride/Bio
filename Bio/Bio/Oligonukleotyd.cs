@@ -7,8 +7,8 @@ namespace Bio
     {
         public int ID { get; set; }                                         //Identyfikator oligonukleotydu
         public string Ciag { get; set; }                                    //Oligonukleotyd
-        public int NmbOfNextMatchingNegative { get; set; }             //Ilość występujących po sobie pozycji na których następny oligonukleotyd się nakłada
-        public int NmbOfPrevMatchingNegative { get; set; }              //Ilość występujących po sobie pozycji na których poprzedni oligonukleotyd się nakłada
+        public int NmbOfNextMatchNeg { get; set; }             //Ilość występujących po sobie pozycji na których następny oligonukleotyd się nakłada
+        public int NmbOfPrevMatchNeg { get; set; }              //Ilość występujących po sobie pozycji na których poprzedni oligonukleotyd się nakłada
         public int NmbOfNextMatchingPositive { get; set; }              //Ilość pozycji na których następny oligonukleotyd się nakłada
         public int NmbOfPrevMatchingPositive { get; set; }             //Ilość pozycji na których następny oligonukleotyd się nakłada
         public int NextOligonukleotid { get; set; }                        //ID następnego oligonukleotydu
@@ -48,6 +48,16 @@ namespace Bio
         {
             Ciag = olig.Ciag;
             ID = olig.ID;
+        }
+        public void CopyFrom4(Oligonukleotyd olig)
+        {
+            Ciag = olig.Ciag;
+            ID = olig.ID;
+            PrevOligonukleotid = olig.PrevOligonukleotid;
+            NextOligonukleotid = olig.NextOligonukleotid;
+            NmbOfNextMatchNeg = olig.NmbOfNextMatchNeg;
+            NmbOfPrevMatchNeg = olig.NmbOfPrevMatchNeg;
+
         }
 
         public void print()

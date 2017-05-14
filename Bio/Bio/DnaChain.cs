@@ -52,13 +52,13 @@ namespace Bio
                     counter_neg = 0;
                 }
             }
-            temp_olig.NmbOfNextMatchingNegative = counter_neg;
+            temp_olig.NmbOfNextMatchNeg = counter_neg;
 
-            if (SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative <= SequenceMax && SampleOligs != null)
+            if (SequenceLength + 10 - temp_olig.NmbOfNextMatchNeg <= SequenceMax && SampleOligs != null)
             {
-                SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchingNegative;
+                SequenceLength = SequenceLength + 10 - temp_olig.NmbOfNextMatchNeg;
                 StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
-                StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                StringOfOlig.Last().NmbOfNextMatchNeg = counter_neg;
                 //      StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
                 temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
                 StringOfOlig.Add(temp2_olig);
@@ -90,7 +90,7 @@ namespace Bio
                 {
                     SequenceLength = SequenceLength + 1;
                     StringOfOlig.Last().NextOligonukleotid = temp2_olig.ID;
-                    StringOfOlig.Last().NmbOfNextMatchingNegative = counter_neg;
+                    StringOfOlig.Last().NmbOfNextMatchNeg = counter_neg;
                     StringOfOlig.Last().NmbOfNextMatchingPositive = counter_pos;
                     temp2_olig.PrevOligonukleotid = StringOfOlig.Last().ID;
                     StringOfOlig.Add(temp2_olig);
@@ -112,6 +112,54 @@ namespace Bio
             return finished;
         }
 
+
+        public int crossConnect(Oligonukleotyd temp1, Oligonukleotyd temp2)
+        {
+            int j = 0;
+            int counterNeg=0;
+            for (int i = 1; i < 10; i++)                                //zliczanie trafień przy możliwości negatywnych błędów
+            {
+                if (temp1.Ciag[i] == temp2.Ciag[j])
+                {
+                    counterNeg++;
+                    j++;
+                }
+                else if (temp1.Ciag[i] == temp2.Ciag[0])
+                {
+                    j = 1;
+                    counterNeg = 1;
+                }
+                else
+                {
+                    j = 0;
+                    counterNeg = 0;
+                }
+            }
+            return counterNeg;
+        }
+        public void CopyDnaChain(DnaChain CopyFrom)
+        {
+            SequenceLength = CopyFrom.SequenceLength;
+            SequenceMax = CopyFrom.SequenceMax;
+
+
+            for (int i = 0; i < CopyFrom.SampleOligs.Count(); i++)
+            {
+                Oligonukleotyd temp_olig;
+                temp_olig = new Oligonukleotyd();
+                temp_olig.CopyFrom3(CopyFrom.SampleOligs[i]);
+                SampleOligs.Add(temp_olig);
+            }
+            for (int i = 0; i < CopyFrom.StringOfOlig.Count(); i++)
+            {
+                Oligonukleotyd temp_olig;
+                temp_olig = new Oligonukleotyd();
+                temp_olig.CopyFrom4(CopyFrom.StringOfOlig[i]);
+                StringOfOlig.Add(temp_olig);
+            }
+        }
+
+
         //Wyświetla stworzony łańcuch DNA
         public void PrintChain() 
         {
@@ -119,7 +167,7 @@ namespace Bio
             {
                 Console.WriteLine("Ciag: {0}, negative: {1}, moje ID: {2},\tID next {3}",
                     StringOfOlig[i].Ciag,
-                    StringOfOlig[i].NmbOfNextMatchingNegative,
+                    StringOfOlig[i].NmbOfNextMatchNeg,
                     StringOfOlig[i].ID,
                     StringOfOlig[i].NextOligonukleotid);
             }
@@ -233,7 +281,7 @@ namespace Bio
                     counter_neg = 0;
                 }
             }
-            StringOfOlig[first].NmbOfNextMatchingNegative = counter_neg;
+            StringOfOlig[first].NmbOfNextMatchNeg = counter_neg;
 
         }
 
@@ -301,8 +349,8 @@ namespace Bio
 
             Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
 
-            StringOfOlig[oligNr1].NmbOfNextMatchingNegative = 0;
-            StringOfOlig[oligNr2].NmbOfNextMatchingNegative = 0;
+            StringOfOlig[oligNr1].NmbOfNextMatchNeg = 0;
+            StringOfOlig[oligNr2].NmbOfNextMatchNeg = 0;
 
 
             
@@ -362,7 +410,7 @@ namespace Bio
             SequenceLength = 0;
             for(int i = 0; i < StringOfOlig.Count() - 1; i++)
             {
-                SequenceLength = SequenceLength + 10 - StringOfOlig[i].NmbOfNextMatchingNegative;
+                SequenceLength = SequenceLength + 10 - StringOfOlig[i].NmbOfNextMatchNeg;
             }
 
 

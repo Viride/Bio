@@ -287,11 +287,11 @@ namespace Bio
 
         public void SwapOlig(int oligNr1, int oligNr2)
         {
-            Console.WriteLine("które oligonukleotydy zamieniamy: {0} & {1}", oligNr1, oligNr2);
+            //Console.WriteLine("które oligonukleotydy zamieniamy: {0} & {1}", oligNr1, oligNr2);
             //Console.WriteLine("które oligonukleotydy zamieniamy: {0} & {1}", oligNr1, oligNr2);
             //PrintChain();
-            StringOfOlig[oligNr1].print();
-            StringOfOlig[oligNr2].print();
+            //StringOfOlig[oligNr1].print();
+            //StringOfOlig[oligNr2].print();
             Oligonukleotyd pom1 = new Oligonukleotyd();
             Oligonukleotyd pom2 = new Oligonukleotyd();
             pom1.Ciag = StringOfOlig[oligNr1].Ciag;
@@ -340,8 +340,8 @@ namespace Bio
             StringOfOlig[oligNr1].Ciag = pom2.Ciag;
             StringOfOlig[oligNr2].Ciag = pom1.Ciag;
 
-            StringOfOlig[oligNr1].print();
-            StringOfOlig[oligNr2].print();
+            //StringOfOlig[oligNr1].print();
+            //StringOfOlig[oligNr2].print();
             Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
 
             StringOfOlig[oligNr2].ID = pom1.ID;

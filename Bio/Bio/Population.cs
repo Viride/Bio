@@ -77,9 +77,9 @@ namespace Bio
                 // Console.WriteLine("ile w populacji: {0}", size);
 
                 int chosenSolution = rand.Next(size);   //losuje rozwiązanie z populacji do mutacji
-                population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
+                //population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
                 int solutionSize = population[chosenSolution].StringOfOlig.Count();
-                Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
+                //Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
 
 
 
@@ -89,7 +89,7 @@ namespace Bio
                 {
                     chosenOlig2 = rand.Next(size);
                 }
-                Console.WriteLine("Wylosowane oligo do zamiany: {0} {1}", chosenOlig1, chosenOlig2);
+                //Console.WriteLine("Wylosowane oligo do zamiany: {0} {1}", chosenOlig1, chosenOlig2);
 
                 /////////////////////////////////////////
                 DnaChain temp = new DnaChain();
@@ -136,9 +136,9 @@ namespace Bio
 
                 if (canMut == 1)
                 {
-                    Console.WriteLine("Mutation done!");
+         //           Console.WriteLine("Mutation done!");
                     int x = population.Count();
-                    population[x - 1].PrintChain();
+                //    population[x - 1].PrintChain();
                 }
             }
 
@@ -158,10 +158,10 @@ namespace Bio
                 // Console.WriteLine("ile w populacji: {0}", size);
 
                 int chosenSolution = rand.Next(size);   //losuje rozwiązanie z populacji do mutacji
-                population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
+                //population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
  
                 int solutionSize = population[chosenSolution].StringOfOlig.Count();
-                Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
+                //Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
                 /////////////////////////////////////////
                 DnaChain temp = new DnaChain();
                 DnaChain temp2 = new DnaChain();
@@ -205,11 +205,11 @@ namespace Bio
                     pom.NmbOfNextMatchNeg = population[chosenSolution].StringOfOlig[counter].NmbOfNextMatchNeg;
 
                     temp.StringOfOlig.Add(pom);
-                    Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
+                    //Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
                     nrOlig1++;
                     counter++;
                 } //koniec ZAMIANY
-                Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
+                //Console.WriteLine("nrOlig1 z drugiego {0}", nrOlig1);
                 //nowy początek
                 temp.StringOfOlig[0].PrevOligonukleotid = -1;
                 //koniec nowego początku
@@ -218,7 +218,7 @@ namespace Bio
                 {
                     check = nrOlig1 - 1;
                 }
-                Console.WriteLine("tuuu {0} {1}", check, counter - 1);
+                //Console.WriteLine("tuuu {0} {1}", check, counter - 1);
                 temp.StringOfOlig[check].NextOligonukleotid = population[chosenSolution].StringOfOlig[0].ID;
 
                 counter = 0; 
@@ -270,9 +270,9 @@ namespace Bio
 
                 if (canMut == 1)
                 {
-                    Console.WriteLine("Mutation2 done!");
+                //    Console.WriteLine("Mutation2 done!");
                     int x = population.Count();
-                    population[x - 1].PrintChain();
+                //   population[x - 1].PrintChain();
                 }
             }
 
@@ -292,8 +292,8 @@ namespace Bio
                 int size = population.Count();
                 
                 int chosenSolution = rand.Next(size);   //losuje rozwiązanie z populacji do mutacji
-                Console.WriteLine("Rozwiązanie do mutacji 3: ");
-                population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
+                //Console.WriteLine("Rozwiązanie do mutacji 3: ");
+               // population[chosenSolution].PrintChain();  //wypisanie wylosowanego rozwiązania do mutacji
 
                 int solutionSize = population[chosenSolution].StringOfOlig.Count();
                // Console.WriteLine("ile w rozwiązaniu: {0}", solutionSize);
@@ -307,7 +307,7 @@ namespace Bio
                 Olig1.CopyFrom2(population[chosenSolution].StringOfOlig[chosenOlig1]);
                 Oligonukleotyd Olig2 = new Oligonukleotyd();
                 Olig2.CopyFrom2(population[chosenSolution].SampleOligs[chosenOlig2]);
-                Console.WriteLine("do zamiany id: {0} {1}", population[chosenSolution].StringOfOlig[chosenOlig1].ID, population[chosenSolution].SampleOligs[chosenOlig2].ID);
+                //Console.WriteLine("do zamiany id: {0} {1}", population[chosenSolution].StringOfOlig[chosenOlig1].ID, population[chosenSolution].SampleOligs[chosenOlig2].ID);
 
 
                 //////////////////////////////////////////
@@ -383,9 +383,9 @@ namespace Bio
 
                 if (canMut == 1)
                 {
-                    Console.WriteLine("Mutation3 done!");
+                //    Console.WriteLine("Mutation3 done!");
                     int x = population.Count();
-                    population[x - 1].PrintChain();
+                //    population[x - 1].PrintChain();
                 }
 
 
@@ -407,8 +407,14 @@ namespace Bio
             DnaChain temp1;
             DnaChain temp2;
             int choosenOne, choosenTwo;
+            int howAcurate = 2;
+            int whileCounter = 0;
             do
             {
+                if (whileCounter % 5 == 4)
+                {
+                    howAcurate++;
+                }
                 choosenOne = rand.Next(population.Count());                
                 do
                 {
@@ -426,19 +432,20 @@ namespace Bio
                 for (int i = 0; i < NmbOfTry; i++)
                 {
                     if (temp1.StringOfOlig[i].NmbOfNextMatchNeg == 0 &&
-                        temp2.StringOfOlig[i].NmbOfNextMatchNeg < 2)
+                        temp2.StringOfOlig[i].NmbOfNextMatchNeg < howAcurate)
                     {
                         crossPlace = i;
                         break;
                     }
                     else
-                        if (temp1.StringOfOlig[i].NmbOfNextMatchNeg < 2 &&
+                        if (temp1.StringOfOlig[i].NmbOfNextMatchNeg < howAcurate &&
                                temp2.StringOfOlig[i].NmbOfNextMatchNeg == 0)
                     {
                         crossPlace = i;
                         break;
                     }
                 }
+                whileCounter++;
             } while (crossPlace == -1);
 
 

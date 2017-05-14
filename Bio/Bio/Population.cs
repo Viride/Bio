@@ -420,26 +420,23 @@ namespace Bio
                 {
                     choosenTwo = rand.Next(population.Count());
                 } while (choosenTwo == choosenOne);
-                temp1 = new DnaChain();
-                temp2 = new DnaChain();
-                temp1.CopyDnaChain(population[choosenOne]);
-                temp2.CopyDnaChain(population[choosenTwo]);
+                
 
-                int NmbOfTry = temp1.StringOfOlig.Count() - 1;
-                if (temp2.StringOfOlig.Count() - 1 < NmbOfTry){
-                    NmbOfTry = temp2.StringOfOlig.Count() - 1;
+                int NmbOfTry = population[choosenOne].StringOfOlig.Count() - 1;
+                if (population[choosenTwo].StringOfOlig.Count() - 1 < NmbOfTry){
+                    NmbOfTry = population[choosenTwo].StringOfOlig.Count() - 1;
                 }
                 for (int i = 0; i < NmbOfTry; i++)
                 {
-                    if (temp1.StringOfOlig[i].NmbOfNextMatchNeg == 0 &&
-                        temp2.StringOfOlig[i].NmbOfNextMatchNeg < howAcurate)
+                    if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg == 0 &&
+                        population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate)
                     {
                         crossPlace = i;
                         break;
                     }
                     else
-                        if (temp1.StringOfOlig[i].NmbOfNextMatchNeg < howAcurate &&
-                               temp2.StringOfOlig[i].NmbOfNextMatchNeg == 0)
+                        if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate &&
+                               population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg == 0)
                     {
                         crossPlace = i;
                         break;
@@ -448,7 +445,12 @@ namespace Bio
                 whileCounter++;
             } while (crossPlace == -1);
 
+            temp1 = new DnaChain();
+            temp2 = new DnaChain();
+            temp1.CopyDnaChain(population[choosenOne]);
+            temp2.CopyDnaChain(population[choosenTwo]);
 
+            Console.Write("while    ");
 
             //Console.Write("Kopiowanie skończone, punkt zamiany wybrany\n" +
             //    "Zaczynam składanie nowych łańcuchów.............. ");
@@ -488,7 +490,7 @@ namespace Bio
             }
             //Console.Write("Skończono tworzenie nowych łańcuchów\n" +
             //    "Zaczynam naprawę łańcucha..........");
-
+            Console.Write("copy1   ");
             int stoppedRepair = -1;
             new1.SequenceLength = 10;
             new2.SequenceLength = 10;
@@ -536,7 +538,7 @@ namespace Bio
                     //Console.WriteLine("usuwałem");
                 }
             }
-
+            Console.Write("repair1  ");
 
             stoppedRepair = -1;
 
@@ -584,6 +586,7 @@ namespace Bio
                     //Console.WriteLine("usuwałem");
                 }
             }
+            Console.Write("repaire2   ");
             //Console.Write("Skończono naprawę łańcucha\n");
 
             //Console.Write("Rozpoczęto naprawę SampleOligs.........  ");
@@ -599,7 +602,7 @@ namespace Bio
             //Console.Write("Skończono naprawę SampleOligs\n");
             population.Add(new1);
             population.Add(new2);
-
+            Console.Write("add\n   ");
         }
 
         //Dodawanie oligo jak rozwiązanie jest zakrótkie
@@ -607,16 +610,19 @@ namespace Bio
         {
             Random rand = new Random();
             Oligonukleotyd temp_olig, temp2_olig;
-            bool finished=true;
+            bool finished=false;
             for (int i = 0; i < population.Count(); i++)
             {
                 
                 if (population[i].SequenceLength < 200)
                 {
-                    int choosenOne = rand.Next(population[i].SampleOligs.Count() - population[i].StringOfOlig.Count());
-                    temp_olig = population[i].StringOfOlig.Last();
-                    temp2_olig = population[i].SampleOligs[choosenOne];
-                    finished = population[i].connect(temp_olig, temp2_olig, finished);
+                    while (finished == false)
+                    {
+                        int choosenOne = rand.Next(population[i].SampleOligs.Count() - population[i].StringOfOlig.Count());
+                        temp_olig = population[i].StringOfOlig.Last();
+                        temp2_olig = population[i].SampleOligs[choosenOne];
+                        finished = population[i].connect(temp_olig, temp2_olig, finished);
+                    }
                 }
             }
 

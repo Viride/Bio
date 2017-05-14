@@ -30,10 +30,10 @@ namespace Bio
             //population.Mutation2();
             //population.Mutation3();
             //population.Crossing();
-
-            for (int j = 0; j < 2000; j++)
+            //population.LongerChain();
+            for (int j = 0; j < 3000; j++)
             {
-                for (int i = 0; i < 40; i++) 
+                for (int i = 0; i < 40; i++)
                 {
                     //population.Mutation();
                     population.Mutation2();

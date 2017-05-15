@@ -342,12 +342,12 @@ namespace Bio
 
             //StringOfOlig[oligNr1].print();
             //StringOfOlig[oligNr2].print();
-            Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
+            //Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
 
             StringOfOlig[oligNr2].ID = pom1.ID;
             StringOfOlig[oligNr1].ID = pom2.ID;
 
-            Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
+            //Console.WriteLine("które oligonukleotydy zamieniamy ID: {0} {1}", StringOfOlig[oligNr2].ID, StringOfOlig[oligNr1].ID);
 
             StringOfOlig[oligNr1].NmbOfNextMatchNeg = 0;
             StringOfOlig[oligNr2].NmbOfNextMatchNeg = 0;

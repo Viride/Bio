@@ -53,6 +53,7 @@ namespace Bio
             Console.WriteLine("Score:\t\tLength:\tNmb of elem.:\n");
             for (int i = 0; i < population.Count(); i++)
             {
+                population[i].CheckSum();
                 Console.WriteLine("{0:f6}\t{1}\t{2}", population[i].Score, population[i].SequenceLength,population[i].StringOfOlig.Count() );
             }
             Console.WriteLine("Koniec wypisywania. Rozmiar populacji: {0}\n\n", population.Count());
@@ -87,7 +88,7 @@ namespace Bio
                 int chosenOlig2 = rand.Next(solutionSize);
                 while (chosenOlig1 == chosenOlig2)
                 {
-                    chosenOlig2 = rand.Next(size);
+                    chosenOlig2 = rand.Next(solutionSize);
                 }
                 //Console.WriteLine("Wylosowane oligo do zamiany: {0} {1}", chosenOlig1, chosenOlig2);
 
@@ -450,7 +451,7 @@ namespace Bio
             temp1.CopyDnaChain(population[choosenOne]);
             temp2.CopyDnaChain(population[choosenTwo]);
 
-            Console.Write("while    ");
+            //Console.Write("while    ");
 
             //Console.Write("Kopiowanie skończone, punkt zamiany wybrany\n" +
             //    "Zaczynam składanie nowych łańcuchów.............. ");
@@ -490,7 +491,7 @@ namespace Bio
             }
             //Console.Write("Skończono tworzenie nowych łańcuchów\n" +
             //    "Zaczynam naprawę łańcucha..........");
-            Console.Write("copy1   ");
+            //Console.Write("copy1   ");
             int stoppedRepair = -1;
             new1.SequenceLength = 10;
             new2.SequenceLength = 10;
@@ -538,7 +539,7 @@ namespace Bio
                     //Console.WriteLine("usuwałem");
                 }
             }
-            Console.Write("repair1  ");
+            //Console.Write("repair1  ");
 
             stoppedRepair = -1;
 
@@ -586,7 +587,7 @@ namespace Bio
                     //Console.WriteLine("usuwałem");
                 }
             }
-            Console.Write("repaire2   ");
+            //Console.Write("repaire2   ");
             //Console.Write("Skończono naprawę łańcucha\n");
 
             //Console.Write("Rozpoczęto naprawę SampleOligs.........  ");
@@ -595,14 +596,21 @@ namespace Bio
             for (int i = 0; i < new1.StringOfOlig.Count(); i ++)
             {
                 Oligonukleotyd temp;
-                temp = new1.SampleOligs.Find(x => x.ID == temp2.StringOfOlig[i].ID);
+                temp = new1.SampleOligs.Find(x => x.ID == new1.StringOfOlig[i].ID);
                 new1.SampleOligs.Remove(temp);
                 new1.SampleOligs.Add(temp);
+            }
+            for (int i = 0; i < new2.StringOfOlig.Count(); i++)
+            {
+                Oligonukleotyd temp;
+                temp = new2.SampleOligs.Find(x => x.ID == new2.StringOfOlig[i].ID);
+                new2.SampleOligs.Remove(temp);
+                new2.SampleOligs.Add(temp);
             }
             //Console.Write("Skończono naprawę SampleOligs\n");
             population.Add(new1);
             population.Add(new2);
-            Console.Write("add\n   ");
+            //Console.Write("add\n   ");
         }
 
         //Dodawanie oligo jak rozwiązanie jest zakrótkie
@@ -631,10 +639,10 @@ namespace Bio
 
         //Selekcja
         //dojdzie część rozwiązań z poprzedniego
-        public void Selection()
+        public void Selection(int N=4)
         {
             
-            int N = 4;
+            //int N = 4;
             List<DnaChain> temp = new List<DnaChain>();
             int chosenOne=0;
             int m = population.Count() / N;

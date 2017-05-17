@@ -53,6 +53,7 @@ namespace Bio
             Console.WriteLine("Score:\t\tLength:\tNmb of elem.:\n");
             for (int i = 0; i < population.Count(); i++)
             {
+                population[i].CheckSumSample();
                 population[i].CheckSum();
                 Console.WriteLine("{0:f6}\t{1}\t{2}", population[i].Score, population[i].SequenceLength,population[i].StringOfOlig.Count() );
             }
@@ -124,6 +125,14 @@ namespace Bio
 
                 temp.SwapOlig(chosenOlig1, chosenOlig2);
 
+                for (int i = 0; i < temp.StringOfOlig.Count(); i++)
+                {
+                    Oligonukleotyd temp2;
+                    temp2 = temp.SampleOligs.Find(x => x.ID == temp.StringOfOlig[i].ID);
+                    temp.SampleOligs.Remove(temp2);
+                    temp.SampleOligs.Add(temp2);
+                }
+
                 if (temp.SequenceLength > temp.SequenceMax)
                 {
                     canMut = 0;
@@ -141,6 +150,7 @@ namespace Bio
                     int x = population.Count();
                 //    population[x - 1].PrintChain();
                 }
+                
             }
 
 
@@ -284,12 +294,13 @@ namespace Bio
         //Mutacja
         public void Mutation3()
         {
+            Random rand = new Random();
             int mutationCounter = 0;
             int canMut = 0;
 
-          //  while (mutationCounter < 3 && canMut == 0)
+            while (mutationCounter < 3 && canMut == 0)
             {
-                Random rand = new Random();
+                
                 int size = population.Count();
                 
                 int chosenSolution = rand.Next(size);   //losuje rozwiązanie z populacji do mutacji
@@ -305,9 +316,11 @@ namespace Bio
                 int chosenOlig2 = rand.Next(sampleSize);
 
                 Oligonukleotyd Olig1 = new Oligonukleotyd();
-                Olig1.CopyFrom2(population[chosenSolution].StringOfOlig[chosenOlig1]);
+                //Olig1 = population[chosenSolution].StringOfOlig[chosenOlig1];
+                //Olig1.CopyFrom2(population[chosenSolution].StringOfOlig[chosenOlig1]);
                 Oligonukleotyd Olig2 = new Oligonukleotyd();
-                Olig2.CopyFrom2(population[chosenSolution].SampleOligs[chosenOlig2]);
+                //Olig2 = population[chosenSolution].SampleOligs[chosenOlig2];
+                //Olig2.CopyFrom2(population[chosenSolution].SampleOligs[chosenOlig2]);
                 //Console.WriteLine("do zamiany id: {0} {1}", population[chosenSolution].StringOfOlig[chosenOlig1].ID, population[chosenSolution].SampleOligs[chosenOlig2].ID);
 
 
@@ -328,6 +341,7 @@ namespace Bio
 
                     temp.SampleOligs.Add(pom1);
                 }
+
                 for (int i = 0; i < population[chosenSolution].StringOfOlig.Count(); i++)
                 {
                     Oligonukleotyd pom2 = new Oligonukleotyd();
@@ -340,12 +354,21 @@ namespace Bio
 
                 }
 
+                Olig1 = temp.SampleOligs.Find(x => x.ID == temp.StringOfOlig[chosenOlig1].ID);
+                Olig2 = temp.SampleOligs[chosenOlig2];
 
                temp.StringOfOlig[chosenOlig1].CopyFrom3(Olig2);  //dodanie do łańcucha
 
+                    //Oligonukleotyd temp3;
+                    //temp3 = temp.SampleOligs.Find(x => x.ID == temp.SampleOligs[chosenOlig2].ID);
+                    //temp.SampleOligs.Remove(temp3);
+                    //temp.SampleOligs.Add(temp2);
+                    
                 temp.SampleOligs.Remove(Olig2);   //usuwam z sampli
                 temp.SampleOligs.Insert(0, Olig2);  //dodaje na poczatek
 
+                    //temp3 = temp.SampleOligs.Find(x => x.ID == temp.StringOfOlig[chosenOlig1].ID);
+                    //temp.SampleOligs.Remove(temp3);
                 temp.SampleOligs.Remove(Olig1);   //usuwam z sampli
                 temp.SampleOligs.Add(Olig1);  //dodaje na koniec sampli
 
@@ -369,6 +392,13 @@ namespace Bio
                     temp.SequenceLength = temp.SequenceLength + 10 - temp.StringOfOlig[i].NmbOfNextMatchNeg;
                 }
 
+                for (int i = 0; i < temp.StringOfOlig.Count(); i++)
+                {
+                    Oligonukleotyd temp2;
+                    temp2 = temp.SampleOligs.Find(x => x.ID == temp.StringOfOlig[i].ID);
+                    temp.SampleOligs.Remove(temp2);
+                    temp.SampleOligs.Add(temp2);
+                }
 
 
                 if (temp.SequenceLength > temp.SequenceMax)

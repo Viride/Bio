@@ -202,6 +202,14 @@ namespace Bio
                 finished=connect(temp_olig, temp2_olig, finished);
             }
 
+            for (int i = 0; i < StringOfOlig.Count; i++) 
+            {
+                Oligonukleotyd temp;
+                temp = SampleOligs.Find(x => x.ID == StringOfOlig[i].ID);
+                SampleOligs.Remove(temp);
+                SampleOligs.Add(temp);
+            }
+
         }
 
         public void CheckSum()
@@ -211,7 +219,19 @@ namespace Bio
                 for (int j = i + 1; j < StringOfOlig.Count(); j++)
                 {
                     if (StringOfOlig[i].ID == StringOfOlig[j].ID)
-                        Console.WriteLine("We got a fuc***g problem over here");
+                        Console.WriteLine("We got a fuc***g problem over here with ID: {0}  i,j: {1} {2}", StringOfOlig[i].ID, i,j);
+                }
+            }
+        }
+
+        public void CheckSumSample()
+        {
+            for (int i = 0; i < SampleOligs.Count() - 1; i++)
+            {
+                for (int j = i + 1; j < SampleOligs.Count(); j++)
+                {
+                    if (SampleOligs[i].ID == SampleOligs[j].ID)
+                        Console.WriteLine("We got a fuc***g problem over here with i: {0} {1}", i,j);
                 }
             }
         }

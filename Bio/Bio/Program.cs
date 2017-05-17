@@ -25,24 +25,23 @@ namespace Bio
             Population population = new Population();
             population.GeneratePopulation(50);
             population.PrintPopulationResult();
-
             //population.Mutation();
             //population.Mutation2();
             //population.Mutation3();
             //population.Crossing();
             //population.LongerChain();
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 1000; j++)
             {
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 50; i++)
                 {
-                    //population.Mutation();
-                    //population.Mutation2();
+                    population.Mutation();
+                    population.Mutation2();
                     //population.Mutation3();
                     population.Crossing();
                     population.LongerChain();
                 }
                 population.Shuffle();
-                //population.Selection(4);
+                population.Selection(5);
                 Console.Write("{0}\n", j);
             }
             population.PrintPopulationResult();

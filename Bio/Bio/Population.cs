@@ -27,8 +27,12 @@ namespace Bio
             {
                 DnaChain temp = new DnaChain();
 
-                temp.SampleOligs = sample_base.SampleOligs;
-                temp.SequenceMax = sample_base.SequenceMax;
+                temp.CopyDnaChain(sample_base);
+                //for (int j = 0; j < sample_base.SampleOligs.Count(); j++)
+                //{
+                //    temp.SampleOligs[j].CopyFrom2(sample_base.SampleOligs[j]);
+                //}
+                //temp.SequenceMax = sample_base.SequenceMax;
                 temp.GenerateRandom();
                 population.Add(temp);
 
@@ -451,26 +455,46 @@ namespace Bio
                 {
                     choosenTwo = rand.Next(population.Count());
                 } while (choosenTwo == choosenOne);
-                
 
-                int NmbOfTry = population[choosenOne].StringOfOlig.Count() - 1;
-                if (population[choosenTwo].StringOfOlig.Count() - 1 < NmbOfTry){
-                    NmbOfTry = population[choosenTwo].StringOfOlig.Count() - 1;
-                }
-                for (int i = 0; i < NmbOfTry; i++)
+                if (whileCounter <= 20)
                 {
-                    if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg == 0 &&
-                        population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate)
+                    int NmbOfTry = population[choosenOne].StringOfOlig.Count() - 1;
+                    if (population[choosenTwo].StringOfOlig.Count() - 1 < NmbOfTry)
                     {
-                        crossPlace = i;
-                        break;
+                        NmbOfTry = population[choosenTwo].StringOfOlig.Count() - 1;
                     }
-                    else
-                        if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate &&
-                               population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg == 0)
+                    for (int i = 0; i < NmbOfTry; i++)
                     {
-                        crossPlace = i;
-                        break;
+                        if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg == 0 &&
+                            population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate)
+                        {
+                            crossPlace = i;
+                            break;
+                        }
+                        else
+                            if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate &&
+                                   population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg == 0)
+                        {
+                            crossPlace = i;
+                            break;
+                        }
+                    }
+                }
+                if (whileCounter > 20)
+                {
+                    int NmbOfTry = population[choosenOne].StringOfOlig.Count() - 1;
+                    if (population[choosenTwo].StringOfOlig.Count() - 1 < NmbOfTry)
+                    {
+                        NmbOfTry = population[choosenTwo].StringOfOlig.Count() - 1;
+                    }
+                    for (int i = 0; i < NmbOfTry; i++)
+                    {
+                        if (population[choosenOne].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate &&
+                            population[choosenTwo].StringOfOlig[i].NmbOfNextMatchNeg < howAcurate)
+                        {
+                            crossPlace = i;
+                            break;
+                        }                    
                     }
                 }
                 whileCounter++;
@@ -481,7 +505,7 @@ namespace Bio
             temp1.CopyDnaChain(population[choosenOne]);
             temp2.CopyDnaChain(population[choosenTwo]);
 
-            //Console.Write("while    ");
+            //Console.Write("{0} {1}", choosenOne, choosenTwo);
 
             //Console.Write("Kopiowanie skończone, punkt zamiany wybrany\n" +
             //    "Zaczynam składanie nowych łańcuchów.............. ");

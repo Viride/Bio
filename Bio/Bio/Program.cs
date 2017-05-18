@@ -30,18 +30,19 @@ namespace Bio
             //population.Mutation3();
             //population.Crossing();
             //population.LongerChain();
-            for (int j = 0; j < 1000; j++)
+            for (int j = 0; j < 6000; j++)
             {
                 for (int i = 0; i < 50; i++)
                 {
                     population.Mutation();
                     population.Mutation2();
-                    //population.Mutation3();
+                    population.Mutation3();
+                    population.LongerChain();
                     population.Crossing();
                     population.LongerChain();
                 }
-                population.Shuffle();
-                population.Selection(5);
+                //population.Shuffle();
+                population.Selection(4);
                 Console.Write("{0}\n", j);
             }
             population.PrintPopulationResult();

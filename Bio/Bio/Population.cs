@@ -10,7 +10,8 @@ namespace Bio
     {
         //  Wydaje mi się, że najłatwiej będzie pracować na listach, bo można swobodnie do nich dodawać i odejmować, a do elementów
         //  można się odwoływać jak w tablicy
-        private List<DnaChain> population; 
+        private List<DnaChain> population;
+        static Random rand = new Random();
 
         public Population()
         {
@@ -78,7 +79,7 @@ namespace Bio
            
             while (mutationCounter < 3 && canMut == 0)
             {
-                Random rand = new Random();
+                ///Random rand = new Random();
                 int size = population.Count();
                 // Console.WriteLine("ile w populacji: {0}", size);
 
@@ -168,7 +169,7 @@ namespace Bio
             
             while (mutationCounter < 3 && canMut == 0)
             {
-                Random rand = new Random();
+                ///Random rand = new Random();
                 int size = population.Count();
                 // Console.WriteLine("ile w populacji: {0}", size);
 
@@ -298,7 +299,7 @@ namespace Bio
         //Mutacja
         public void Mutation3()
         {
-            Random rand = new Random();
+            ///Random rand = new Random();
             int mutationCounter = 0;
             int canMut = 0;
 
@@ -437,7 +438,7 @@ namespace Bio
         {
             
             //wylosować dwa łańcuchy, skopiować ich dane do nowych
-            Random rand = new Random();
+            ///Random rand = new Random();
             int crossPlace = -1;
             DnaChain temp1;
             DnaChain temp2;
@@ -455,7 +456,6 @@ namespace Bio
                 {
                     choosenTwo = rand.Next(population.Count());
                 } while (choosenTwo == choosenOne);
-
                 if (whileCounter <= 20)
                 {
                     int NmbOfTry = population[choosenOne].StringOfOlig.Count() - 1;
@@ -595,6 +595,11 @@ namespace Bio
             }
             //Console.Write("repair1  ");
 
+            
+
+
+
+
             stoppedRepair = -1;
 
             for (int i = 0; i < new2.StringOfOlig.Count() - 1; i++)
@@ -641,6 +646,10 @@ namespace Bio
                     //Console.WriteLine("usuwałem");
                 }
             }
+
+
+            
+
             //Console.Write("repaire2   ");
             //Console.Write("Skończono naprawę łańcucha\n");
 
@@ -661,6 +670,35 @@ namespace Bio
                 new2.SampleOligs.Remove(temp);
                 new2.SampleOligs.Add(temp);
             }
+
+            bool finished = false;
+            if (new1.SequenceLength < 200)
+            {
+                Oligonukleotyd temp_olig, temp2_olig;
+                while (finished == false)
+                {
+                    int choosen1 = rand.Next(new1.SampleOligs.Count() - new1.StringOfOlig.Count());
+                    temp_olig = new1.StringOfOlig.Last();
+                    temp2_olig = new1.SampleOligs[choosen1];
+                    finished = new1.connect(temp_olig, temp2_olig, finished);
+                }
+            }
+
+            finished = false;
+
+            if (new2.SequenceLength < 200)
+            {
+                Oligonukleotyd temp_olig, temp2_olig;
+                while (finished == false)
+                {
+                    int choosen1 = rand.Next(new2.SampleOligs.Count() - new2.StringOfOlig.Count());
+                    temp_olig = new2.StringOfOlig.Last();
+                    temp2_olig = new2.SampleOligs[choosen1];
+                    finished = new2.connect(temp_olig, temp2_olig, finished);
+                }
+            }
+
+
             //Console.Write("Skończono naprawę SampleOligs\n");
             population.Add(new1);
             population.Add(new2);
@@ -670,7 +708,7 @@ namespace Bio
         //Dodawanie oligo jak rozwiązanie jest zakrótkie
         public void LongerChain()
         {
-            Random rand = new Random();
+            ///Random rand = new Random();
             Oligonukleotyd temp_olig, temp2_olig;
             bool finished=false;
             for (int i = 0; i < population.Count(); i++)
@@ -727,20 +765,7 @@ namespace Bio
             population = temp;
         }
 
-        public void Shuffle()
-        {
-            Random rand = new Random();
-            int n = population.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rand.Next(n + 1);
-                DnaChain value = population[k];
-                population[k] = population[n];
-                population[n] = value;
-            }
-
-        }
+        
 
     }
 }

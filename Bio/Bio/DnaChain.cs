@@ -12,6 +12,7 @@ namespace Bio
         public List<Oligonukleotyd> SampleOligs { get; set; }   //lista wszystkich oligonukleotydów
         public List<Oligonukleotyd> StringOfOlig { get; set; }  //obecny łańcuch oligonukleotydów
         public float Score { get { return(float)SequenceLength / StringOfOlig.Count(); } }
+        static Random rnd = new Random();
 
 
 
@@ -181,7 +182,7 @@ namespace Bio
         
         public void GenerateRandom()
         {
-            Random rnd = new Random();
+            ///Random rnd = new Random();
             int chosen = rnd.Next(SampleOligs.Count() - StringOfOlig.Count());  //losujemy który wybrać z przedziału 0 do maks - tyle ile jest w stworzonym łańcuchu
             StringOfOlig.Add(SampleOligs[chosen]);                              //pierwszy element
             SequenceLength = 10;

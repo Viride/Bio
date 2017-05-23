@@ -30,31 +30,36 @@ namespace Bio
             //population.Mutation3();
             //population.Crossing();
             //population.LongerChain();
-            for (int j = 0; j < 1000; j++)
+            for (int j = 0; j < 5000; j++)
             {
-                for (int i = 0; i < N; i++)
+                for (int i = 0; i < N*2; i++)
                 {
                     population.Mutation();
-                    //population.Mutation2();
-                    //population.Mutation3();
-                    //population.Crossing();
-                    //population.LongerChain();
+                    population.Mutation2();
+                    population.Mutation3();
+                    population.Crossing();
+                }
+                population.LongerChain();
+
+                for (int i = 0; i < N*2; i++)
+                {
+                    population.Mutation();
                 }
                 population.LongerChain();
             
-                for (int i = 0; i < N; i++)
+                for (int i = 0; i < N* 1.5; i++)
                 {
                     population.Mutation2();
                 }
                 population.LongerChain();
 
-                for (int i = 0; i < N; i++)
+                for (int i = 0; i < N*3; i++)
                 {
                     population.Mutation3();
                 }
                 population.LongerChain();
 
-                for (int i = 0; i < 2.5*N; i++)
+                for (int i = 0; i < N*1.5; i++)
                 {
                     population.Crossing();
 
@@ -63,9 +68,11 @@ namespace Bio
 
                 population.Selection(5);
                 Console.Write("{0}\n", j);
+                population.PrintBestResult();
             }
             population.PrintPopulationResult();
-            population.PrintPopulationResult();
+            population.PrintBestResult();
+            // population.PrintPopulationResult();
             Console.ReadLine();
 
         }

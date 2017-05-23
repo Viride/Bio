@@ -12,6 +12,7 @@ namespace Bio
         //  można się odwoływać jak w tablicy
         private List<DnaChain> population;
         static Random rand = new Random();
+        int maxLength = 500;        //DO ZAMIANY PRZY INNYM PLIKU!!!!!!!!!!!!
 
         public Population()
         {
@@ -21,8 +22,8 @@ namespace Bio
         public void GeneratePopulation(int rozmiar)
         {
             DnaChain sample_base = new DnaChain();
-           // sample_base = new DnaChain();
-            sample_base.LoadSamples("9.200-40.txt", 209);
+            // sample_base = new DnaChain();
+            sample_base.LoadSamples("53.500-200.txt", 509);
 
             for (int i = 0; i < rozmiar; i++)
             {
@@ -63,6 +64,19 @@ namespace Bio
                 Console.WriteLine("{0:f6}\t{1}\t{2}", population[i].Score, population[i].SequenceLength,population[i].StringOfOlig.Count() );
             }
             Console.WriteLine("Koniec wypisywania. Rozmiar populacji: {0}\n\n", population.Count());
+        }
+
+        public void PrintBestResult()
+        {
+            int max = 0;
+            for (int i = 0; i < population.Count(); i++)
+            {
+                if(population[i].StringOfOlig.Count() > max)
+                {
+                    max = population[i].StringOfOlig.Count();
+                }
+             }
+            Console.WriteLine("Najwięcej olig: {0}\n", max);
         }
 
 
@@ -672,7 +686,7 @@ namespace Bio
             }
 
             bool finished = false;
-            if (new1.SequenceLength < 200)
+            if (new1.SequenceLength < maxLength)
             {
                 Oligonukleotyd temp_olig, temp2_olig;
                 while (finished == false)
@@ -686,7 +700,7 @@ namespace Bio
 
             finished = false;
 
-            if (new2.SequenceLength < 200)
+            if (new2.SequenceLength < maxLength)
             {
                 Oligonukleotyd temp_olig, temp2_olig;
                 while (finished == false)
@@ -714,7 +728,7 @@ namespace Bio
             for (int i = 0; i < population.Count(); i++)
             {
                 
-                if (population[i].SequenceLength < 200)
+                if (population[i].SequenceLength < maxLength)
                 {
                     while (finished == false)
                     {
@@ -731,7 +745,7 @@ namespace Bio
 
         //Selekcja
         //dojdzie część rozwiązań z poprzedniego
-        public void Selection(int N=4)
+        public void Selection(int N)
         {
             
             //int N = 4;

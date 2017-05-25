@@ -21,7 +21,7 @@ namespace Bio
             //test1.SequenceMax = 209;
             //test1.GenerateRandom();
             //test1.PrintChainSummary();
-            int N = 50;
+            int N = 150;
             Population population = new Population();
             population.GeneratePopulation(N);
             population.PrintPopulationResult();
@@ -30,36 +30,39 @@ namespace Bio
             //population.Mutation3();
             //population.Crossing();
             //population.LongerChain();
-            for (int j = 0; j < 5000; j++)
+            int P = 0;
+            for (int j = 0; j < 10000; j++)
             {
-                for (int i = 0; i < N*2; i++)
-                {
-                    population.Mutation();
-                    population.Mutation2();
-                    population.Mutation3();
-                    population.Crossing();
-                }
-                population.LongerChain();
+                    for (int i = 0; i < N*0.5; i++)
+                    {
+                        population.Mutation();
+                        population.Mutation2();
+                        population.Mutation3();
+                        population.Crossing();
+                    }
+                    population.LongerChain();
 
                 for (int i = 0; i < N*2; i++)
+                {
+                    population.Mutation3();
+                }
+
+                for (int i = 0; i < N; i++)
                 {
                     population.Mutation();
                 }
                 population.LongerChain();
             
-                for (int i = 0; i < N* 1.5; i++)
+                for (int i = 0; i < N; i++)
                 {
                     population.Mutation2();
                 }
                 population.LongerChain();
 
-                for (int i = 0; i < N*3; i++)
-                {
-                    population.Mutation3();
-                }
+                
                 population.LongerChain();
 
-                for (int i = 0; i < N*1.5; i++)
+                for (int i = 0; i < N; i++)
                 {
                     population.Crossing();
 
@@ -69,6 +72,8 @@ namespace Bio
                 population.Selection(5);
                 Console.Write("{0}\n", j);
                 population.PrintBestResult();
+
+                P++;
             }
             population.PrintPopulationResult();
             population.PrintBestResult();

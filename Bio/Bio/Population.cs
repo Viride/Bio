@@ -12,7 +12,7 @@ namespace Bio
         //  można się odwoływać jak w tablicy
         private List<DnaChain> population;
         static Random rand = new Random();
-        int maxLength = 500;        //DO ZAMIANY PRZY INNYM PLIKU!!!!!!!!!!!!
+        int maxLength = 200;        //DO ZAMIANY PRZY INNYM PLIKU!!!!!!!!!!!!
 
         public Population()
         {
@@ -23,7 +23,8 @@ namespace Bio
         {
             DnaChain sample_base = new DnaChain();
             // sample_base = new DnaChain();
-            sample_base.LoadSamples("53.500-200.txt", 509);
+            //53.500-200.txt        //max length do zmiany przy innym pliku!!!!!!!!!!!!
+            sample_base.LoadSamples("9.200-40.txt", 209);
 
             for (int i = 0; i < rozmiar; i++)
             {
@@ -159,7 +160,8 @@ namespace Bio
                 else
                 {
                     canMut = 1;
-                    population.Add(temp);
+                    int index = rand.Next(population.Count());
+                    population.Insert(index, temp);
                 }
                 mutationCounter++;
 
@@ -294,7 +296,8 @@ namespace Bio
                 else
                 {
                     canMut = 1;
-                    population.Add(temp);
+                    int index = rand.Next(population.Count());
+                    population.Insert(index, temp);
                 }
                 mutationCounter++;
 
@@ -427,7 +430,8 @@ namespace Bio
                 else
                 {
                     canMut = 1;
-                    population.Add(temp);
+                    int index = rand.Next(population.Count());
+                    population.Insert(index, temp);
                 }
                 mutationCounter++;
 
@@ -714,8 +718,10 @@ namespace Bio
 
 
             //Console.Write("Skończono naprawę SampleOligs\n");
-            population.Add(new1);
-            population.Add(new2);
+            int index1 = rand.Next(population.Count());
+            population.Insert(index1, new1);
+            int index2 = rand.Next(population.Count());
+            population.Insert(index2, new2);
             //Console.Write("add\n   ");
         }
 

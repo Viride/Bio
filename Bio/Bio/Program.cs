@@ -21,7 +21,7 @@ namespace Bio
             //test1.SequenceMax = 209;
             //test1.GenerateRandom();
             //test1.PrintChainSummary();
-            int N = 150;
+            int N = 100;
             Population population = new Population();
             population.GeneratePopulation(N);
             population.PrintPopulationResult();
@@ -30,21 +30,30 @@ namespace Bio
             //population.Mutation3();
             //population.Crossing();
             //population.LongerChain();
-            int P = 0;
+            int P = 100, L=200;
+            
             for (int j = 0; j < 10000; j++)
             {
-                    for (int i = 0; i < N*0.5; i++)
-                    {
-                        population.Mutation();
-                        population.Mutation2();
-                        population.Mutation3();
-                        population.Crossing();
-                    }
-                    population.LongerChain();
-
-                for (int i = 0; i < N*2; i++)
+                for (int i = 0; i < N*0.5; i++)
                 {
+                    population.Mutation();
+                    population.Mutation2();
                     population.Mutation3();
+                    population.Crossing();
+                }
+                population.LongerChain();
+
+                if(j == P)
+                {
+                    L += 200;
+                    P += 200;
+                }
+                if (j > L && j < P)
+                {
+                    for (int i = 0; i < N * 2; i++)
+                    {
+                        population.Mutation3();
+                    }
                 }
 
                 for (int i = 0; i < N; i++)

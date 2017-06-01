@@ -31,9 +31,12 @@ namespace Bio
             //population.Crossing();
             //population.LongerChain();
             int P = 100, L=200;
+
+            var watchWhole = System.Diagnostics.Stopwatch.StartNew();
             
             for (int j = 0; j < 100; j++)
             {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
                 for (int i = 0; i < N*0.5; i++)
                 {
                     population.Mutation();
@@ -109,13 +112,19 @@ namespace Bio
                 population.LongerChain();
 
                 population.Selection(5);
+                watch.Stop();
+                var elapsedMsOneTick = watch.Elapsed;
                 Console.Write("{0}\n", j);
                 population.PrintBestResult();
+                Console.WriteLine("Czas: {0}\n", elapsedMsOneTick);
 
                 P++;
             }
+            watchWhole.Stop();
+            var elapsedMs = watchWhole.Elapsed;
             population.PrintPopulationResult();
             population.PrintBestResult();
+            Console.Write("Czas: {0}\n", elapsedMs);
             population.SaveBestToFile("Rozw1.txt");
             // population.PrintPopulationResult();
             Console.ReadLine();

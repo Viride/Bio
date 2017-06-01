@@ -77,7 +77,7 @@ namespace Bio
                     max = population[i].StringOfOlig.Count();
                 }
              }
-            Console.WriteLine("Najwięcej olig: {0}, population size: {1}\n", max, population.Count());
+            Console.WriteLine("Najwięcej olig: {0}, population size: {1}", max, population.Count());
         }
 
         public void SaveBestToFile(string file_name)

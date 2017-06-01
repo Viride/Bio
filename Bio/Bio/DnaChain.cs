@@ -160,6 +160,33 @@ namespace Bio
             }
         }
 
+        public void PrintWholeChain(string file_name)
+        {
+            System.IO.StreamWriter file = System.IO.File.CreateText(file_name);
+            file.Write("{0}", StringOfOlig[0].Ciag);
+            for (int i = 1; i < StringOfOlig.Count(); i++)
+            {
+                for (int j = StringOfOlig[i - 1].NmbOfNextMatchNeg; j < 10; j++)
+                {
+                    file.Write("{0}", StringOfOlig[i].Ciag[j]);
+                }
+            }
+            file.WriteLine();
+            file.WriteLine("{0}", StringOfOlig[0].Ciag);
+            int spaces=0;
+            for (int i = 1; i < StringOfOlig.Count(); i++)
+            {
+                spaces = spaces + 10 - StringOfOlig[i - 1].NmbOfNextMatchNeg;
+                for (int j = 0; j < spaces; j++)
+                {
+                    file.Write(" ");
+                }
+                file.WriteLine("{0}", StringOfOlig[i].Ciag);
+
+            }
+            file.Close();
+        }
+
 
         //Wyświetla stworzony łańcuch DNA
         public void PrintChain() 

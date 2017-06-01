@@ -21,7 +21,7 @@ namespace Bio
             //test1.SequenceMax = 209;
             //test1.GenerateRandom();
             //test1.PrintChainSummary();
-            int N = 100;
+            int N = 50;
             Population population = new Population();
             population.GeneratePopulation(N);
             population.PrintPopulationResult();
@@ -32,7 +32,7 @@ namespace Bio
             //population.LongerChain();
             int P = 100, L=200;
             
-            for (int j = 0; j < 10000; j++)
+            for (int j = 0; j < 100; j++)
             {
                 for (int i = 0; i < N*0.5; i++)
                 {
@@ -55,21 +55,51 @@ namespace Bio
                         population.Mutation3();
                     }
                 }
-
-                for (int i = 0; i < N; i++)
-                {
-                    population.Mutation();
-                }
-                population.LongerChain();
-            
-                for (int i = 0; i < N; i++)
-                {
-                    population.Mutation2();
-                }
                 population.LongerChain();
 
-                
-                population.LongerChain();
+                if (j < 300)
+                {
+                    for (int i = 0; i < N; i++)
+                    {
+                        population.Mutation();
+                    }
+                    population.LongerChain();
+
+                    for (int i = 0; i < N; i++)
+                    {
+                        population.Mutation2();
+                    }
+                    population.LongerChain();
+                }
+                else if (j < 600)
+                {
+                    for (int i = 0; i < N*2; i++)
+                    {
+                        population.Mutation();
+                    }
+                    population.LongerChain();
+
+                    for (int i = 0; i < N*2; i++)
+                    {
+                        population.Mutation2();
+                    }
+                    population.LongerChain();
+                }
+                else
+                {
+                    for (int i = 0; i < N*3; i++)
+                    {
+                        population.Mutation();
+                    }
+                    population.LongerChain();
+
+                    for (int i = 0; i < N*3; i++)
+                    {
+                        population.Mutation2();
+                    }
+                    population.LongerChain();
+                }
+
 
                 for (int i = 0; i < N; i++)
                 {
@@ -86,6 +116,7 @@ namespace Bio
             }
             population.PrintPopulationResult();
             population.PrintBestResult();
+            population.SaveBestToFile("Rozw1.txt");
             // population.PrintPopulationResult();
             Console.ReadLine();
 

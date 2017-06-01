@@ -77,9 +77,22 @@ namespace Bio
                     max = population[i].StringOfOlig.Count();
                 }
              }
-            Console.WriteLine("Najwięcej olig: {0}\n", max);
+            Console.WriteLine("Najwięcej olig: {0}, population size: {1}\n", max, population.Count());
         }
 
+        public void SaveBestToFile(string file_name)
+        {
+            int max = 0;
+            for (int i = 0; i < population.Count(); i++)
+            {
+                if (population[i].StringOfOlig.Count() > max)
+                {
+                    max = i;
+                }
+            }
+            population[max].PrintWholeChain(file_name);
+
+        }
 
 
         //  Nowo powstałe rozwiązania (mutacja, krzyżowanie) dodajemy do populacji a na koniec 

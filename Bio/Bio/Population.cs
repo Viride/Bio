@@ -14,17 +14,18 @@ namespace Bio
         static Random rand = new Random();
         int maxLength = 200;        //DO ZAMIANY PRZY INNYM PLIKU!!!!!!!!!!!!
 
-        public Population()
+        public Population(int maxLength)
         {
             population = new List<DnaChain>();
+            this.maxLength = maxLength - 9;
         }
 
-        public void GeneratePopulation(int rozmiar)
+        public void GeneratePopulation(int rozmiar, string fileName, int size)
         {
             DnaChain sample_base = new DnaChain();
             // sample_base = new DnaChain();
             //53.500-200.txt        //max length do zmiany przy innym pliku!!!!!!!!!!!!
-            sample_base.LoadSamples("9.200-40.txt", 209);
+            sample_base.LoadSamples(fileName, size);
 
             for (int i = 0; i < rozmiar; i++)
             {
@@ -80,17 +81,26 @@ namespace Bio
             Console.WriteLine("Najwięcej olig: {0}, population size: {1}", max, population.Count());
         }
 
-        public void SaveBestToFile(string file_name)
+        public void SaveBestToFile(string file_name, string time, int NmbOfRepeats)
         {
             int max = 0;
+            int maxCounter=0;
+            float maxScore=0;
+            int maxScoreCounter = 0;
             for (int i = 0; i < population.Count(); i++)
             {
                 if (population[i].StringOfOlig.Count() > max)
                 {
-                    max = i;
+                    max = population[i].StringOfOlig.Count();
+                    maxCounter = i;
+                }
+                if (population[i].Score > max)
+                {
+                    maxScore = population[i].Score;
+                    maxScoreCounter = i;
                 }
             }
-            population[max].PrintWholeChain(file_name);
+            population[maxScoreCounter].PrintWholeChain(file_name, time, NmbOfRepeats);
 
         }
 

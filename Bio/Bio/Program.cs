@@ -37,7 +37,7 @@ namespace Bio
             size[6] = 509; size[7] = 309; size[8] = 309; size[9] = 509; size[10] = 309; size[11] = 309;
             size[12] = 409; size[13] = 409; size[14] = 409; size[15] = 409; size[16] = 309; size[17] = 509;
 
-            int NmbOfRepeats = 10;
+            int NmbOfRepeats = 2000;
 
 
             for (int k = 0; k < NmbOfTestSamples; k++) {
@@ -50,6 +50,8 @@ namespace Bio
                 int P = 100, L = 200;
 
                 var watchWhole = System.Diagnostics.Stopwatch.StartNew();
+
+                Console.WriteLine("{0}", tab[k]);
 
                 for (int j = 0; j < NmbOfRepeats; j++)
                 {
@@ -141,15 +143,15 @@ namespace Bio
                     population.Selection(5);
                     watch.Stop();
                     var elapsedMsOneTick = watch.Elapsed;
-                    Console.Write("{0}\n", j);
-                    population.PrintBestResult();
-                    Console.WriteLine("Czas: {0}\n", elapsedMsOneTick);
+                    //Console.Write("{0}\n", j);
+                    //population.PrintBestResult();
+                    //Console.WriteLine("Czas: {0}\n", elapsedMsOneTick);
 
                     P++;
                 }
                 watchWhole.Stop();
                 var elapsedMs = watchWhole.Elapsed;
-                population.PrintPopulationResult();
+                //population.PrintPopulationResult();
                 population.PrintBestResult();
                 Console.Write("Czas: {0}\n", elapsedMs);
                 population.SaveBestToFile("Rozw"+tab[k], elapsedMs.ToString(), NmbOfRepeats);

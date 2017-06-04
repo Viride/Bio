@@ -1,0 +1,76 @@
+Working time: 00:56:26.3766187
+Repeats count: 5000
+Number of Oligonukleotyd#: 70
+Chain size: 302
+
+GGTCAAGGGCATCATCCTCAAGTCACGGAGAAGGCGCTGCGCAAGTACGGGGTGGCCGTCCACGCTGAGCAAGCGCGCCATCCTGGCGCGGCGCTTCAACAAGCTGACGTTCCGGGAGAATCCGGTCAAGGAGAAGGCTTGCTCCTGCCGCAAGGGCGAGATCGCCGCCGGCCTGCCGGTCACGACAAGCTGTCTCCCTACGACAAGCACGATCCTGAAGCGCGCCATCCCGCCGTCCACGCTGAGCACGGATCATCCAGGAGGTGGAGGCGCTGCGGCGCTTCACGGATCATCCAGGAGAAGTCACGGATC
+GGTCAAGGGC
+     AGGGCATCAT
+         CATCATCCTC
+            CATCCTCAAG
+                   AAGTCACGGA
+                          GGAGAAGGCG
+                             GAAGGCGCTG
+                              AAGGCGCTGC
+                                GGCGCTGCGC
+                                 GCGCTGCGCA
+                                        GCAAGTACGG
+                                            GTACGGGGTG
+                                             TACGGGGTGG
+                                              ACGGGGTGGC
+                                                      GCCGTCCACG
+                                                             ACGCTGAGCA
+                                                                     CAAGCGCGCC
+                                                                        GCGCGCCATC
+                                                                              CATCCTGGCG
+                                                                                     GCGCGGCGCT
+                                                                                      CGCGGCGCTT
+                                                                                         GGCGCTTCAA
+                                                                                           CGCTTCAACA
+                                                                                                 AACAAGCTGA
+                                                                                                     AGCTGACGTT
+                                                                                                      GCTGACGTTC
+                                                                                                           CGTTCCGGGA
+                                                                                                                   GAGAATCCGG
+                                                                                                                         CCGGTCAAGG
+                                                                                                                               AAGGAGAAGG
+                                                                                                                                       GGCTTGCTCC
+                                                                                                                                               CCTGCCGCAA
+                                                                                                                                                     GCAAGGGCGA
+                                                                                                                                                           GCGAGATCGC
+                                                                                                                                                                   GCCGCCGGCC
+                                                                                                                                                                     CGCCGGCCTG
+                                                                                                                                                                      GCCGGCCTGC
+                                                                                                                                                                       CCGGCCTGCC
+                                                                                                                                                                         GGCCTGCCGG
+                                                                                                                                                                            CTGCCGGTCA
+                                                                                                                                                                                     ACGACAAGCT
+                                                                                                                                                                                        ACAAGCTGTC
+                                                                                                                                                                                         CAAGCTGTCT
+                                                                                                                                                                                           AGCTGTCTCC
+                                                                                                                                                                                               GTCTCCCTAC
+                                                                                                                                                                                                 CTCCCTACGA
+                                                                                                                                                                                                   CCCTACGACA
+                                                                                                                                                                                                     CTACGACAAG
+                                                                                                                                                                                                             AGCACGATCC
+                                                                                                                                                                                                               CACGATCCTG
+                                                                                                                                                                                                                  GATCCTGAAG
+                                                                                                                                                                                                                          AGCGCGCCAT
+                                                                                                                                                                                                                            CGCGCCATCC
+                                                                                                                                                                                                                                 CATCCCGCCG
+                                                                                                                                                                                                                                  ATCCCGCCGT
+                                                                                                                                                                                                                                        CCGTCCACGC
+                                                                                                                                                                                                                                               CGCTGAGCAC
+                                                                                                                                                                                                                                                GCTGAGCACG
+                                                                                                                                                                                                                                                      CACGGATCAT
+                                                                                                                                                                                                                                                              ATCCAGGAGG
+                                                                                                                                                                                                                                                                   GGAGGTGGAG
+                                                                                                                                                                                                                                                                           AGGCGCTGCG
+                                                                                                                                                                                                                                                                                   CGGCGCTTCA
+                                                                                                                                                                                                                                                                                          TCACGGATCA
+                                                                                                                                                                                                                                                                                            ACGGATCATC
+                                                                                                                                                                                                                                                                                                  CATCCAGGAG
+                                                                                                                                                                                                                                                                                                         GAGAAGTCAC
+                                                                                                                                                                                                                                                                                                          AGAAGTCACG
+                                                                                                                                                                                                                                                                                                             AGTCACGGAT
+                                                                                                                                                                                                                                                                                                              GTCACGGATC

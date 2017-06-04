@@ -160,9 +160,9 @@ namespace Bio
             }
         }
 
-        public void PrintWholeChain(string file_name, string time, int NmbOfRepeats)
+        public void PrintWholeChain( string time, int NmbOfRepeats, System.IO.StreamWriter file)
         {
-            System.IO.StreamWriter file = System.IO.File.CreateText(file_name);
+            //System.IO.StreamWriter file = System.IO.File.CreateText(file_name);
             file.WriteLine("Working time: {0}", time);
             file.WriteLine("Repeats count: {0}", NmbOfRepeats);
             file.WriteLine("Number of Oligonukleotyd#: {0}", StringOfOlig.Count());

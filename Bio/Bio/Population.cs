@@ -70,38 +70,49 @@ namespace Bio
 
         public void PrintBestResult()
         {
-            int max = 0;
-            for (int i = 0; i < population.Count(); i++)
-            {
-                if(population[i].StringOfOlig.Count() > max)
-                {
-                    max = population[i].StringOfOlig.Count();
-                }
-             }
-            Console.WriteLine("Najwięcej olig: {0}, population size: {1}", max, population.Count());
-        }
-
-        public void SaveBestToFile(string file_name, string time, int NmbOfRepeats)
-        {
-            int max = 0;
-            int maxCounter=0;
-            float maxScore=0;
+            float maxScore = 0;
             int maxScoreCounter = 0;
             for (int i = 0; i < population.Count(); i++)
             {
-                if (population[i].StringOfOlig.Count() > max)
-                {
-                    max = population[i].StringOfOlig.Count();
-                    maxCounter = i;
-                }
-                if (population[i].Score > max)
+                if (population[i].Score > maxScore)
                 {
                     maxScore = population[i].Score;
                     maxScoreCounter = i;
                 }
             }
-            population[maxScoreCounter].PrintWholeChain(file_name, time, NmbOfRepeats);
+            Console.WriteLine("Najwięcej olig: {0}, population size: {1}", maxScore, population.Count());
+        }
 
+        public void SaveBestToFile(string time, int NmbOfRepeats, System.IO.StreamWriter file)
+        {
+            float maxScore=0;
+            int maxScoreCounter = 0;
+            for (int i = 0; i < population.Count(); i++)
+            {
+                if (population[i].Score > maxScore)
+                {
+                    maxScore = population[i].Score;
+                    maxScoreCounter = i;
+                }
+            }
+            population[maxScoreCounter].PrintWholeChain(time, NmbOfRepeats, file);
+
+        }
+
+        public void SaveIterationToFile(string time, int NmbOfRepeats, System.IO.StreamWriter file)
+        {
+            float maxScore = 0;
+            int maxScoreCounter = 0;
+            for (int i = 0; i < population.Count(); i++)
+            {
+                if (population[i].Score > maxScore)
+                {
+                    maxScore = population[i].Score;
+                    maxScoreCounter = i;
+                }
+            }
+            file.WriteLine("{0}\t{1}\t{2}\t{3}", NmbOfRepeats, population[maxScoreCounter].StringOfOlig.Count(), time, 
+                                               population[maxScoreCounter].Score);
         }
 
 
@@ -601,7 +612,7 @@ namespace Bio
                     else
                     {
                         stoppedRepair = i;
-                        new1.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        new1.StringOfOlig[i].NmbOfNextMatchNeg = 0;
                         //Console.WriteLine("koniec miejsca");
                     }
                 }
@@ -619,7 +630,7 @@ namespace Bio
                     else
                     {
                         stoppedRepair = i;
-                        new1.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        new1.StringOfOlig[i].NmbOfNextMatchNeg = 0;
                         //Console.WriteLine("koniec miejsca");
 
                     }
@@ -628,7 +639,7 @@ namespace Bio
             }
             if (stoppedRepair != -1)
             {
-                for (int i = new1.StringOfOlig.Count() - 1; i > stoppedRepair; i--)
+                for (int i = new1.StringOfOlig.Count() - 1; i >= stoppedRepair; i--)
                 {
                     new1.StringOfOlig.Remove(new1.StringOfOlig[i]);
                     //Console.WriteLine("usuwałem");
@@ -654,7 +665,7 @@ namespace Bio
                     else
                     {
                         stoppedRepair = i;
-                        new2.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        new2.StringOfOlig[i].NmbOfNextMatchNeg = 0;
                         //Console.WriteLine("koniec miejsca");
                     }
                 }
@@ -662,6 +673,7 @@ namespace Bio
                 {
                     new2.StringOfOlig[i].NmbOfNextMatchNeg =
                         new2.crossConnect(new2.StringOfOlig[i], new2.StringOfOlig[i + 1]);
+
                     if (new2.SequenceLength + 10 - new2.StringOfOlig[i].NmbOfNextMatchNeg < new2.SequenceMax)
                     {
                         new2.SequenceLength += 10 - new2.StringOfOlig[i].NmbOfNextMatchNeg;
@@ -672,7 +684,7 @@ namespace Bio
                     else
                     {
                         stoppedRepair = i;
-                        new2.StringOfOlig[i].NmbOfNextMatchNeg = -1;
+                        new2.StringOfOlig[i].NmbOfNextMatchNeg = 0;
                         //Console.WriteLine("koniec miejsca");
 
                     }
@@ -681,7 +693,7 @@ namespace Bio
             //jeżeli długość jest większa niż maks
             if (stoppedRepair != -1)
             {
-                for (int i = new2.StringOfOlig.Count() - 1; i > stoppedRepair; i--)
+                for (int i = new2.StringOfOlig.Count() - 1; i >= stoppedRepair; i--)
                 {
                     new2.StringOfOlig.Remove(new2.StringOfOlig[i]);
                     //Console.WriteLine("usuwałem");

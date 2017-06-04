@@ -796,11 +796,13 @@ namespace Bio
             for (int i = 0; i < m * N; i = i + N)
             {
                 chosenOne = i;
+                float maxScore = population[chosenOne].Score;
                 for (int j = 1; j < N; j++)
-                {
-                    if (population[chosenOne].Score > population[i + j].Score)
+                {                    
+                    if (population[i + j].Score < maxScore)
                     {
                         chosenOne = i + j;
+                        maxScore = population[chosenOne].Score;
                     }
                 }
                 temp.Add(population[chosenOne]);
@@ -808,11 +810,13 @@ namespace Bio
             if (population.Count() % N != 0)
             {
                 chosenOne = m * N;
+                float maxScore = population[chosenOne].Score;
                 for (int i = m * N; i < population.Count(); i++)
-                {
-                    if (population[chosenOne].Score > population[i].Score)
+                {                    
+                    if (population[i].Score < maxScore)
                     {
                         chosenOne = i;
+                        maxScore = population[chosenOne].Score;
                     }
                 }
                 temp.Add(population[chosenOne]);

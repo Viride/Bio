@@ -74,7 +74,7 @@ namespace Bio
             int maxScoreCounter = 0;
             for (int i = 0; i < population.Count(); i++)
             {
-                if (population[i].Score > maxScore)
+                if (population[i].Score < maxScore)
                 {
                     maxScore = population[i].Score;
                     maxScoreCounter = i;
@@ -89,7 +89,7 @@ namespace Bio
             int maxScoreCounter = 0;
             for (int i = 0; i < population.Count(); i++)
             {
-                if (population[i].Score > maxScore)
+                if (population[i].Score < maxScore)
                 {
                     maxScore = population[i].Score;
                     maxScoreCounter = i;
@@ -105,7 +105,7 @@ namespace Bio
             int maxScoreCounter = 0;
             for (int i = 0; i < population.Count(); i++)
             {
-                if (population[i].Score > maxScore)
+                if (population[i].Score < maxScore)
                 {
                     maxScore = population[i].Score;
                     maxScoreCounter = i;

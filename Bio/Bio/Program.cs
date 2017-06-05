@@ -10,173 +10,156 @@ namespace Bio
     {
         static void Main(string[] args)
         {
-            int NmbOfTestSamples=29;
+            int NmbOfTestSamples=18;
 
             string[] tab = new string[NmbOfTestSamples];
-            tab[0] = "144.500-12" + ".txt";
-            tab[1] = "9.200-40" + ".txt";
-            tab[2] = "9.200-80" + ".txt";            
-            tab[3] = "10.500-100" + ".txt";
-            tab[4] = "10.500-200" + ".txt";
-            tab[5] = "18.200-40" + ".txt";
-            tab[6] = "18.200-80" + ".txt";
-            tab[7] = "20.300-60" + ".txt";
-            tab[8] = "20.300-120" + ".txt";
-            tab[9] = "25.500-100" + ".txt";
-            tab[10] = "25.500-200" + ".txt";
-            tab[11] = "28.500-18" + ".txt";
-            tab[12] = "34.500-32" + ".txt";
-            tab[13] = "35.200-40" + ".txt";
-            tab[14] = "35.200-80" + ".txt";
-            tab[15] = "53.500-100" + ".txt";
-            tab[16] = "53.500-200" + ".txt";
-            tab[17] = "55.300-60" + ".txt";
-            tab[18] = "55.300-120" + ".txt";
-            tab[19] = "55.400-80" + ".txt";
-            tab[20] = "55.400-160" + ".txt";
-            tab[21] = "58.300-60" + ".txt";
-            tab[22] = "58.300-120" + ".txt";
-            tab[23] = "59.500-2" + ".txt";
-            tab[24] = "62.400-80" + ".txt";
-            tab[25] = "62.400-160" + ".txt";
-            tab[26] = "68.400-80" + ".txt";
-            tab[27] = "68.400-160" + ".txt";
-            tab[28] = "113.500-8" + ".txt";
-            
+            tab[0] = "9.200+20" + ".txt";
+            tab[1] = "9.200+80" + ".txt";
+            tab[2] = "9.200-40" + ".txt";
+            tab[3] = "10.500+50" + ".txt";
+            tab[4] = "10.500+200" + ".txt";
+            tab[5] = "10.500-100" + ".txt";
+            tab[6] = "10.500-200" + ".txt";
+            tab[7] = "20.300+30" + ".txt";
+            tab[8] = "20.300+120" + ".txt";
+            tab[9] = "53.500-200" + ".txt";
+            tab[10] = "55.300-60" + ".txt";
+            tab[11] = "55.300-120" + ".txt";
+            tab[12] = "55.400+40" + ".txt";
+            tab[13] = "55.400+160" + ".txt";
+            tab[14] = "55.400-80" + ".txt";
+            tab[15] = "55.400-160" + ".txt";
+            tab[16] = "55.300-120" + ".txt";
+            tab[17] = "144.500-12" + ".txt";
 
             int[] size = new int[NmbOfTestSamples];
-            size[0] = 509; size[1] = 209; size[2] = 209; size[3] = 509; size[4] = 509; size[5] = 209;
-            size[6] = 209; size[7] = 309; size[8] = 309; size[9] = 509; size[10] = 509; size[11] = 509;
-            size[12] = 509; size[13] = 209; size[14] = 209; size[15] = 509; size[16] = 509; size[17] = 309;
-            size[18] = 309; size[19] = 409; size[20] = 409; size[21] = 309; size[22] = 309; size[23] = 509;
-            size[24] = 409; size[25] = 409; size[26] = 409; size[27] = 409; size[28] = 509;
+            size[0] = 209; size[1] = 209; size[2] = 209; size[3] = 509; size[4] = 509; size[5] = 509;
+            size[6] = 509; size[7] = 309; size[8] = 309; size[9] = 509; size[10] = 309; size[11] = 309;
+            size[12] = 409; size[13] = 409; size[14] = 409; size[15] = 409; size[16] = 309; size[17] = 509;
 
-            int NmbOfRepeats = 4000;
-            int N = 150;
-            //int k = 0;
-            //for (int k = 0; k < NmbOfTestSamples; k++) {
-            Parallel.For(0, NmbOfTestSamples, new ParallelOptions { MaxDegreeOfParallelism = 4 }, k =>
-             {
+            int NmbOfRepeats = 50;
+            int N = 100;
 
-                 Population population = new Population(size[k]);
-                 System.IO.StreamWriter file = System.IO.File.CreateText("Rozw" + tab[k]);
-                 file.WriteLine("Nr\tMaxOlig\tTime\tScore");
+            for (int k = 0; k < NmbOfTestSamples; k++) {
+                
+                Population population = new Population(size[k]);
+                System.IO.StreamWriter file = System.IO.File.CreateText("Rozw" + tab[k]);
+                file.WriteLine("Nr\tMaxOlig\tTime\tScore");
 
-                 population.GeneratePopulation(N, tab[k], size[k]);
-                 //population.PrintPopulationResult();
+                population.GeneratePopulation(N, tab[k], size[k]);
+                population.PrintPopulationResult();
 
-                 int P = 100, L = 200;
+                int P = 100, L = 200;
 
-                 var watchWhole = System.Diagnostics.Stopwatch.StartNew();
+                var watchWhole = System.Diagnostics.Stopwatch.StartNew();
 
-                 Console.WriteLine("{0}", tab[k]);
+                Console.WriteLine("{0}", tab[k]);
 
-                 for (int j = 0; j < NmbOfRepeats; j++)
-                 {
-                     var watch = System.Diagnostics.Stopwatch.StartNew();
-                     for (int i = 0; i < N * 0.5; i++)
-                     {
-                         population.Mutation();
-                         population.Mutation2();
-                         population.Mutation3();
-                         population.LongerChain();
-                         population.Crossing();
-                     }
-                     population.LongerChain();
+                for (int j = 0; j < NmbOfRepeats; j++)
+                {
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                    for (int i = 0; i < N * 0.5; i++)
+                    {
+                        population.Mutation();
+                        population.Mutation2();
+                        population.Mutation3();
+                        population.LongerChain();
+                        population.Crossing();
+                    }
+                    population.LongerChain();
 
-                     if (j == P)
-                     {
-                         L += 200;
-                         P += 200;
-                     }
-                     if (j > L && j < P)
-                     {
-                         for (int i = 0; i < N * 2; i++)
-                         {
-                             population.Mutation3();
-                             population.LongerChain();
-                         }
-                     }
+                    if (j == P)
+                    {
+                        L += 200;
+                        P += 200;
+                    }
+                    if (j > L && j < P)
+                    {
+                        for (int i = 0; i < N * 2; i++)
+                        {
+                            population.Mutation3();
+                            population.LongerChain();
+                        }
+                    }
                     //population.LongerChain();
                     //population.LongerChain();
 
                     if (j < 300)
-                     {
-                         for (int i = 0; i < N; i++)
-                         {
-                             population.Mutation();
-                             population.LongerChain();
-                         }
+                    {
+                        for (int i = 0; i < N; i++)
+                        {
+                            population.Mutation();
+                            population.LongerChain();
+                        }
                         //population.LongerChain();
 
                         for (int i = 0; i < N; i++)
-                         {
-                             population.Mutation2();
-                             population.LongerChain();
-                         }
+                        {
+                            population.Mutation2();
+                            population.LongerChain();
+                        }
                         //population.LongerChain();
                     }
-                     else if (j < 600)
-                     {
-                         for (int i = 0; i < N * 2; i++)
-                         {
-                             population.Mutation();
-                             population.LongerChain();
+                    else if (j < 600)
+                    {
+                        for (int i = 0; i < N * 2; i++)
+                        {
+                            population.Mutation();
+                            population.LongerChain();
 
-                         }
+                        }
                         //population.LongerChain();
 
                         for (int i = 0; i < N * 2; i++)
-                         {
-                             population.Mutation2();
-                             population.LongerChain();
-                         }
+                        {
+                            population.Mutation2();
+                            population.LongerChain();
+                        }
                         //population.LongerChain();
                     }
-                     else
-                     {
-                         for (int i = 0; i < N * 3; i++)
-                         {
-                             population.Mutation();
-                             population.LongerChain();
-                         }
+                    else
+                    {
+                        for (int i = 0; i < N * 3; i++)
+                        {
+                            population.Mutation();
+                            population.LongerChain();
+                        }
                         //population.LongerChain();
 
                         for (int i = 0; i < N * 3; i++)
-                         {
-                             population.Mutation2();
-                             population.LongerChain();
-                         }
+                        {
+                            population.Mutation2();
+                            population.LongerChain();
+                        }
                         //population.LongerChain();
                     }
 
 
-                     for (int i = 0; i < N; i++)
-                     {
-                         population.Crossing();
+                    for (int i = 0; i < N; i++)
+                    {
+                        population.Crossing();
 
-                     }
-                     population.LongerChain();
+                    }
+                    population.LongerChain();
 
-                     population.Selection(5);
-                     watch.Stop();
-                     var elapsedMsOneTick = watch.Elapsed;
+                    population.Selection(5);
+                    watch.Stop();
+                    var elapsedMsOneTick = watch.Elapsed;
                     //Console.Write("{0}\n", j);
                     //population.PrintBestResult();
                     //Console.WriteLine("Czas: {0}\n", elapsedMsOneTick);
 
                     P++;
-                     population.SaveIterationToFile(elapsedMsOneTick.ToString(), j, file);
-                 }
-                 watchWhole.Stop();
-                 var elapsedMs = watchWhole.Elapsed;
+                    population.SaveIterationToFile(elapsedMsOneTick.ToString(), j, file);
+                }
+                watchWhole.Stop();
+                var elapsedMs = watchWhole.Elapsed;
                 //population.PrintPopulationResult();
                 population.PrintBestResult();
-                 Console.Write("Czas: {0}\n", elapsedMs);
-                 population.SaveBestToFile(elapsedMs.ToString(), NmbOfRepeats, file);
-                 file.Close();
-                 Console.WriteLine("Skończono {0}", tab[k]);
-             });
+                Console.Write("Czas: {0}\n", elapsedMs);
+                population.SaveBestToFile(elapsedMs.ToString(), NmbOfRepeats, file);
+                file.Close();
+            }
             // population.PrintPopulationResult();
             Console.ReadLine();
 

@@ -13,13 +13,13 @@ namespace Bio
             int NmbOfTestSamples=29;
 
             string[] tab = new string[NmbOfTestSamples];
-            tab[0] = "144.500-12" + ".txt";
-            tab[1] = "9.200-40" + ".txt";
+            tab[1] = "144.500-12" + ".txt";
+            tab[6] = "9.200-40" + ".txt";
             tab[2] = "9.200-80" + ".txt";
             tab[3] = "10.500-100" + ".txt";
             tab[4] = "10.500-200" + ".txt";
             tab[5] = "18.200-40" + ".txt";
-            tab[6] = "18.200-80" + ".txt";
+            tab[0] = "18.200-80" + ".txt";
             tab[7] = "20.300-60" + ".txt";
             tab[8] = "20.300-120" + ".txt";
             tab[9] = "25.500-100" + ".txt";
@@ -45,17 +45,19 @@ namespace Bio
 
 
             int[] size = new int[NmbOfTestSamples];
-            size[0] = 509; size[1] = 209; size[2] = 209; size[3] = 509; size[4] = 509; size[5] = 209;
-            size[6] = 209; size[7] = 309; size[8] = 309; size[9] = 509; size[10] = 509; size[11] = 509;
+            size[1] = 509; size[6] = 209; size[2] = 209; size[3] = 509; size[4] = 509; size[5] = 209;
+            size[0] = 209; size[7] = 309; size[8] = 309; size[9] = 509; size[10] = 509; size[11] = 509;
             size[12] = 509; size[13] = 209; size[14] = 209; size[15] = 509; size[16] = 509; size[17] = 309;
             size[18] = 309; size[19] = 409; size[20] = 409; size[21] = 309; size[22] = 309; size[23] = 509;
             size[24] = 409; size[25] = 409; size[26] = 409; size[27] = 409; size[28] = 509;
 
-            int NmbOfRepeats = 4000;
+            int NmbOfRepeats = 500;
             int N = 100;
 
-            for (int k = 0; k < NmbOfTestSamples; k++) {
-                
+            for (int k = 0; k < 1; k++) 
+            //for (int k = 2 ; k < NmbOfTestSamples; k++)
+            {
+
                 Population population = new Population(size[k]);
                 System.IO.StreamWriter file = System.IO.File.CreateText("Rozw" + tab[k]);
                 file.WriteLine("Nr\tMaxOlig\tTime\tScore");
@@ -159,12 +161,12 @@ namespace Bio
                     population.Selection(5);
                     watch.Stop();
                     var elapsedMsOneTick = watch.Elapsed;
-                    //Console.Write("{0}\n", j);
+                    Console.Write("{0}\n", j);
                     //population.PrintBestResult();
                     //Console.WriteLine("Czas: {0}\n", elapsedMsOneTick);
 
                     P++;
-                    population.SaveIterationToFile(elapsedMsOneTick.ToString(), j, file);
+                    //population.SaveIterationToFile(elapsedMsOneTick.ToString(), j, file);
                 }
                 watchWhole.Stop();
                 var elapsedMs = watchWhole.Elapsed;
